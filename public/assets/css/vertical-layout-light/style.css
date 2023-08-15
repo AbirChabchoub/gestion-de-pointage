@@ -11037,7 +11037,7 @@ textarea.is-invalid.tt-hint {
 
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel, .wizard > .actions a {
   display: inline-block;
-  font-weight: 400;
+  font-weight: 100;
   color: #1F1F1F;
   text-align: center;
   vertical-align: middle;
@@ -13791,7 +13791,12 @@ input[type="button"].btn-block {
   background-clip: border-box;
   border: 1px solid #e3e3e3;
   border-radius: 20px;
+
 }
+
+
+
+
 
 .card > hr {
   margin-right: 0;

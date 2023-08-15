@@ -39,21 +39,6 @@ return(
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px;"}}>ECH</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px;"}}>CAT</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px;"}}>Nombre d'enfant</th>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </tr>    
                   </thead>
                   <tbody>
