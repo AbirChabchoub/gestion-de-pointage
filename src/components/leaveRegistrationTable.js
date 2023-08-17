@@ -1,4 +1,5 @@
 import React from "react";
+import Foot from "./Foot";
 function leaveRegistrationTable(){
 return(
 

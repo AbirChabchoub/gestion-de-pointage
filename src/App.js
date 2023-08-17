@@ -13,6 +13,10 @@ import WorkCycle from './pages/workCycle';
 import PlanningList from './pages/planingList';
 import LeaveRequest from './pages/leaveRequest';
 import Home from './pages/home';
+import Login from './pages/login';
+import Signup from './pages/signup';
+import DownloadPT from './pages/downloadPT';
+import TerminalManagement from './pages/terminalManagement';
 
 
 function App() {
@@ -20,7 +24,11 @@ function App() {
     <div>
 
       <Routes>
-        <Route path="/home" exact element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/downloadPT" exact element={<DownloadPT />} />
+        <Route path="/terminalManagement" exact element={<TerminalManagement />} />
         <Route path="/departmentSettings" element={<DepartementSettings />} />
         <Route path="/employees" element={<Employee/>}/>
         <Route path="/abscenceRegistration" element={<AbsenceRegistration/>}/>
@@ -30,13 +38,6 @@ function App() {
         <Route path="/presenceRules" element={<PresenceRules/>}/>
         <Route path="/workCycle" element={<WorkCycle/>}/>
         <Route path="/planingList" element={<PlanningList/>}/>
-
-
-
-
-
-
-
       </Routes>
 
   
