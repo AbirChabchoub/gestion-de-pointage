@@ -13,7 +13,7 @@ function DepartementSettingsTable() {
                                     <div className="row">
                                         <div className="col-12">
                                             <div className="table-responsive">
-                                                <table id="example" class="display expandable-table" style={{ 'width': '100%' }}>
+                                                <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
                                                     <thead>
                                                         <tr role="row">
                                                             <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "170px;" }}>Nom</th>

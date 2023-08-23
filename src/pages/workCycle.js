@@ -27,6 +27,7 @@ function WorkCycle() {
                                                             <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "70px;" }}>Code</th>
                                                             <th className="sorting_asc" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Libellé</th>
                                                             <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Nombre de jours</th>
+                                                            <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Action</th>
 
                                                         </tr>
                                                     </thead>
@@ -34,9 +35,10 @@ function WorkCycle() {
                                                         <tr className="odd">
                                                             <td className=" select-checkbox">Incs234</td>
                                                             <td className="sorting_1">Car insurance</td>
-                                                            <td>Business type 1</td><td>Jesse Thomas</td>
-                                                            <td>$1200</td><td>In progress</td><td>25/04/2020</td>
-                                                            <td className=" details-control"></td>
+                                                            <td>Business type 1</td>
+                                                            <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
+                                    <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
+                                  </td>
                                                         </tr>
                                                         
 

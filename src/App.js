@@ -1,9 +1,7 @@
 import './App.css';
-import ReactDOM from "react-dom/client";
 import React from 'react';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Employee from './pages/employee';
-import Machine from './pages/machine';
 import DepartementSettings from "./pages/departmentSettings"
 import AbsenceRegistration from './pages/absenceRegistration';
 import LeaveRegistration from './pages/leaveRegistration';
@@ -17,6 +15,16 @@ import Login from './pages/login';
 import Signup from './pages/signup';
 import DownloadPT from './pages/downloadPT';
 import TerminalManagement from './pages/terminalManagement';
+import AddEmployee from './pages/addEmployee';
+import AddDepartement from './pages/addDepartement';
+import AddAbscence from './pages/addAbscenceForm';
+import AddLeave from './pages/addLeave';
+import PlanningAssignmentEmp from './pages/planningAssignmentEmployee';
+import PlanningAssignmentDep from './pages/planningAssignmentDep';
+import AttendanceLog from './pages/attendanceLog';
+import ManualPointing from './pages/manualPointing';
+import PersonalCumul from './pages/personalCumul';
+import DepartementCumul from './pages/departementCumul';
 
 
 function App() {
@@ -28,7 +36,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" exact element={<Home />} />
         <Route path="/downloadPT" exact element={<DownloadPT />} />
-        <Route path="/terminalManagement" exact element={<TerminalManagement />} />
+        <Route path="/terminalManagement"  element={<TerminalManagement />} />
         <Route path="/departmentSettings" element={<DepartementSettings />} />
         <Route path="/employees" element={<Employee/>}/>
         <Route path="/abscenceRegistration" element={<AbsenceRegistration/>}/>
@@ -38,6 +46,27 @@ function App() {
         <Route path="/presenceRules" element={<PresenceRules/>}/>
         <Route path="/workCycle" element={<WorkCycle/>}/>
         <Route path="/planingList" element={<PlanningList/>}/>
+        <Route path="/addEmployee" element={<AddEmployee/>}/>
+        <Route path="/addDepartement" element={<AddDepartement/>}/>
+        <Route path="/addAbscence" element={<AddAbscence/>}/>
+        <Route path="/addLeave" element={<AddLeave/>}/>
+        <Route path="/AssignmentPlaningToEmployees" element={<PlanningAssignmentEmp/>}/>
+        <Route path="/AssignmentPlaningToDepartments" element={<PlanningAssignmentDep/>}/>
+        <Route path="/AttendanceLog" element={<AttendanceLog/>}/>
+        <Route path="/manualPointing" element={<ManualPointing/>}/>
+        <Route path="/personalCumul" element={<PersonalCumul/>}/>
+        <Route path="/departmentCumul" element={<DepartementCumul/>}/>
+
+
+
+
+
+
+
+
+
+
+
       </Routes>
 
   

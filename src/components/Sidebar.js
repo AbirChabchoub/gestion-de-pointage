@@ -8,27 +8,27 @@ function Sidebar() {
         <nav className="sidebar sidebar-offcanvas" id="sidebar">
           <ul className="nav">
             <li className="nav-item">
-              <a className="nav-link" href="index.html">
+              <Link className="nav-link" to="/">
                 <i className="icon-grid menu-icon"></i>
                 <span className="menu-title">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i className="icon-layout menu-icon"></i>
+                <i className="ti-desktop menu-icon"></i>
                 <span className="menu-title">Machine</span>
                 <i className="menu-arrow"></i>
               </a>
               <div className="collapse" id="ui-basic">
                 <ul className="nav flex-column sub-menu">
                   <li className="nav-item"> <Link className="nav-link" to="/downloadPT">Téléchargé pointages</Link></li>
-                  <li className="nav-item"> <Link className="nav-link" to="/terminalManagement">Téléchargé pointages</Link></li>
+                  <li className="nav-item"> <Link className="nav-link" to="/terminalManagement">Gestion des terminaux</Link></li>
                 </ul>
               </div>
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-                <i className="icon-columns menu-icon"></i>
+                <i className="ti-user menu-icon"></i>
                 <span className="menu-title">Employés</span>
                 <i className="menu-arrow"></i>
               </a>
@@ -47,7 +47,7 @@ function Sidebar() {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                <i className="icon-bar-graph menu-icon"></i>
+                <i className="ti-calendar menu-icon"></i>
                 <span className="menu-title">Planification</span>
                 <i className="menu-arrow"></i>
               </a>
@@ -63,7 +63,7 @@ function Sidebar() {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-                <i className="icon-grid-2 menu-icon"></i>
+                <i className="ti-hand-stop menu-icon"></i>
                 <span className="menu-title">Pointage et calcul</span>
                 <i className="menu-arrow"></i>
               </a>
@@ -79,7 +79,7 @@ function Sidebar() {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                <i className="icon-contract menu-icon"></i>
+                <i className="ti-agenda menu-icon"></i>
                 <span className="menu-title">Rapports</span>
                 <i className="menu-arrow"></i>
               </a>
