@@ -1,13 +1,88 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 function PlanningAssignmentEmp() {
+
+//display cycles into select 
+const [Cycles, setCycles] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.get('/api/cycle-travail/get-all-cycles');
+      console.log(data);
+      setCycles(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
+//display employees into select 
+const [employees, setEmployees] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.get('/api/employee/get-all-employees');
+      console.log(data);
+      setEmployees(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+//display departments into select 
+const [departments, setDepartments] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.get('/api/departement/get-all-departments');
+      console.log(data);
+      setDepartments(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+//display cycles into select 
+const [plannings, setPlannings] = useState([]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.get('/api/planning/get-all-plannings');
+      console.log(data);
+      setPlannings(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
+
   return (
     <div>
-
       <Nav />
-
-
       <Sidebar />
 
       <div>
@@ -64,7 +139,7 @@ function PlanningAssignmentEmp() {
                                   <td>Business type 1</td><td>Jesse Thomas</td>
                                   <td>$1200</td>
 
-                                  <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
+                                  <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary" data-toggle="modal" data-target="#exampleModal"></i></button>
                                     <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                   </td>
                                 </tr>
@@ -89,88 +164,134 @@ function PlanningAssignmentEmp() {
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Fiche congé</h5>
+              <h5 className="modal-title" id="exampleModalLabel">Modification affectation planning</h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">
-              <div className="row">
-                <div className="col-12 grid-margin">
-                  <div className="card">
-                    <div className="card-body">
-                      <form className="form-sample">
-
-                        <div className="row">
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label">Employé</label>
-                              <div className="col-sm-9">
-                                <select className="form-control">
-                                  <option>Masculin</option>
-                                  <option>Féminin</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label">Motif</label>
-                              <div className="col-sm-9">
-                                <select className="form-control">
-                                  <option>Maladie</option>
-                                  <option>Accident de travail</option>
-                                  <option>Congé de travail</option>
-                                  <option>Jour férié chomé non payé</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label">Date début</label>
-                              <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label">Date fin</label>
-                              <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" required>Raison</label>
-                              <div className="col-sm-9">
-                                <input type="text" className="form-control" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" required>Observation</label>
-                              <div className="col-sm-9">
-                                <input type="text" className="form-control" />
-                              </div>
-                            </div>
-                          </div>
-
-                        </div>
-                      </form>
+              <form  className="form-sample">
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" >Employé</label>
+                      <div className="col-sm-9">
+                        <select className="form-control" >  {employees.map((employee) => (
+                          <option key={employee.value} value={employee.value}>
+                            {employee.nomEmp}
+                          </option>
+                        ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" >Département</label>
+                      <div className="col-sm-9">
+                        <select className="form-control" > 
+                         {departments.map((departement) => (
+                          <option key={departement.value} value={departement.value}>
+                            {departement.nomDept}
+                          </option>
+                        ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" className="btn btn-primary">Ajouter</button>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" >Planning</label>
+                      <div className="col-sm-9">
+                        <select className="form-control" >
+                          {plannings.map((planning) => (
+                            <option key={planning.value} value={planning.value}>
+                              {planning.libellePlanning}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" >Cycle</label>
+                      <div className="col-sm-9">
+                        <select className="form-control" >  {Cycles.map((cycle) => (
+                          <option key={cycle.value} value={cycle.value}>
+                            {cycle.libelleCycle}
+                          </option>
+                        ))}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Du</label>
+                      <div className="col-sm-9">
+                        <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" >Au</label>
+                      <div className="col-sm-9">
+                      <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Début</label>
+                      <div className="col-sm-9">
+                        <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" htmlFor="libelleCycle" >Fin</label>
+                      <div className="col-sm-9">
+                        <input id="libelleCycle" name="libelleCycle" type="time" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="form-group row">
+                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Base</label>
+                      <div className="col-sm-9">
+                        <input id="nbJourCycle" name="nbJourCycle" type="number" className="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">
+                    Fermer
+                  </button>
+                  <button type="submit" className="btn btn-primary">
+                    Ajouter
+                  </button>
+                </div>
+              </form>
+             
             </div>
           </div>
         </div>

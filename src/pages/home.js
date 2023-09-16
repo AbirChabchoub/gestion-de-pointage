@@ -6,7 +6,6 @@ import Nav from "../components/Nav";
 function Home() {
 
 
-
 // Store a reference to the <p> element
 const employeeCountElement = document.getElementById('employeeCount');
 // Make a GET request to fetch the employee count
@@ -21,8 +20,8 @@ axios.get('http://localhost:8080/api/employee/quantity')
   .catch((error) => {
     console.error(error);
   });
-
   
+
 
 
 
@@ -141,6 +140,11 @@ axios.get('http://localhost:8080/api/employee/quantity')
 
     </div>
   );
+
+
+
+
+
 }
 
 

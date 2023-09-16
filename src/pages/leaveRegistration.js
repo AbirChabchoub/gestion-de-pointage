@@ -1,7 +1,89 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 function LeaveRegistration() {
+
+  //fetch employees data
+  const [leaves, setLeaves] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const instance = axios.create({ baseURL: 'http://localhost:8080' });
+        const { data } = await instance.get('/api/conge/get-all-conges');
+        console.log(data);
+        setLeaves(data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  //delete cycles 
+  const handleDeleteCycles = async (e, codeCycle) => {
+    e.preventDefault();
+
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.delete(`/api/cycle-travail/delete/${codeCycle}`);      // Handle the response data or any UI updates as needed
+      console.log(`Department with ID ${codeCycle} deleted successfully.`);
+    } catch (error) {
+      // Handle errors, e.g., display an error message
+      console.error(`Error deleting department: ${error.message}`);
+    }
+  };
+
+  //add new work-cycle
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Get the form data from the input fields of departments
+    const dateEcriture = e.target.dateEcriture.value;
+    const dateConge = e.target.dateConge.value;
+    const motif = e.target.motif.value;
+    const raison = e.target.raison.value;
+    const observation = e.target.observation.value;
+
+
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const response = await instance.post('/api/conge/add-conge', {
+        observation, raison, motif, dateConge, dateEcriture
+      });
+
+      console.log(response.data);
+      setMessage('Congé créé avec succès');
+    } catch (err) {
+      console.error(err);
+      setError('Le congé existe déjà');
+    }
+  };
+
+  //display cycles into select 
+
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const instance = axios.create({ baseURL: 'http://localhost:8080' });
+        const { data } = await instance.get('/api/employee/get-all-employees');
+        console.log(data);
+        setOptions(data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
 
@@ -15,14 +97,14 @@ function LeaveRegistration() {
           <div className="main-panel">
             <div className="content-wrapper">
               <table>
-              <thead>
-                <tr>
-                <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></th>
-                <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" ><i className="ti-printer btn-icon-prepend"></i> Imprimer</button></th>
-                <th> <button type="button" className="btn btn-outline-info btn-icon-text marge">Synchroniser base pointeuse<i className="ti-reload btn-icon-append"></i> </button></th>
-                <th> <button type="button" className="btn btn-outline-info btn-icon-text marge"> Transféré employé vers pointeuse<i className="ti-upload btn-icon-append"></i></button> </th>
-              </tr>
-              </thead>
+                <thead>
+                  <tr>
+                    <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></th>
+                    <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" ><i className="ti-printer btn-icon-prepend"></i> Imprimer</button></th>
+                    <th> <button type="button" className="btn btn-outline-info btn-icon-text marge">Synchroniser base pointeuse<i className="ti-reload btn-icon-append"></i> </button></th>
+                    <th> <button type="button" className="btn btn-outline-info btn-icon-text marge"> Transféré employé vers pointeuse<i className="ti-upload btn-icon-append"></i></button> </th>
+                  </tr>
+                </thead>
               </table>
               <br />
               <div className="row" >
@@ -33,32 +115,42 @@ function LeaveRegistration() {
                       <div className="row">
                         <div className="col-12">
                           <div className="table-responsive">
-                            <table id="example" className="display expandable-table" style={{"width": "100%"}}>
+                            <table id="example" className="display expandable-table" style={{ "width": "100%" }}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{"width": "70px"}}>Date écriture</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{"width": "51px"}}aria-sort="ascending">Employé</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Date congé</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Motif</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Raison</th>
+                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{ "width": "70px" }}>Date écriture</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Employé</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Date congé</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Motif</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Raison</th>
 
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Observation</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Action</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Observation</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Action</th>
 
                                 </tr>
 
                               </thead>
                               <tbody>
-                                <tr className="odd">
-                                  <td className=" select-checkbox">Incs234</td>
-                                  <td className="sorting_1">Car insurance</td>
-                                  <td>Business type 1</td><td>Jesse Thomas</td>
-                                  <td>$1200</td>
-                                  <td>$1200</td>
-                                  <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
-                                    <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
-                                  </td>
-                                </tr>
+                                {
+                                  leaves.map((leave, index) => {
+                                    return <tr className="odd" key={index}>
+
+
+                                      <td>{leave.dateEcriture}</td>
+
+                                      <td>{leave.dateConge}</td>
+                                      <td>{leave.motif}</td>
+                                      <td>{leave.raison}</td>
+                                      <td>{leave.observation}</td>
+
+
+
+
+                                      <td><button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep"><i className="ti-pencil text-primary"></i></button>
+                                        <button type="button" onClick={(e) => handleDeleteCycles(e, leave?.idConge)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
+                                      </td>
+                                    </tr>
+                                  })}
                               </tbody>
                             </table>
                           </div>
@@ -98,8 +190,11 @@ function LeaveRegistration() {
                               <label className="col-sm-3 col-form-label">Employé</label>
                               <div className="col-sm-9">
                                 <select className="form-control">
-                                  <option>Masculin</option>
-                                  <option>Féminin</option>
+                                  {options.map((option) => (
+                                    <option key={option.value} value={option.value}>
+                                      {option.nomEmp}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </div>
@@ -174,6 +269,8 @@ function LeaveRegistration() {
       <Foot />
 
     </div>
+
+
   );
 }
 

@@ -1,20 +1,31 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 function PlanningAssignmentDep() {
+
+
+
+
+
+
   return (
     <div>
-
       <Nav />
-
-
       <Sidebar />
-
       <div>
         <div className="container-fluid page-body-wrapper">
           <div className="main-panel">
             <div className="content-wrapper">
-              <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
+              <table>
+                <thead>
+                  <tr>
+                  <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
+                  </tr>
+                </thead>
+              </table>
+
               <br></br>
               <div className="row">
                 <div className="col-md-6">
@@ -54,7 +65,7 @@ function PlanningAssignmentDep() {
 
                                   <td>$1200</td>
 
-                                  <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
+                                  <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary" data-toggle="modal" data-target="#exampleModal"></i></button>
                                     <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                   </td>
                                 </tr>
@@ -75,142 +86,7 @@ function PlanningAssignmentDep() {
 
 
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modification affectation planning</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form onSubmit={handleSubmit} className="form-sample">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" >Employé</label>
-                      <div className="col-sm-9">
-                        <select className="form-control" >  {options.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.nomRegle}
-                          </option>
-                        ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" >Département</label>
-                      <div className="col-sm-9">
-                        <select className="form-control" >  {options.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.nomRegle}
-                          </option>
-                        ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" >Planning</label>
-                      <div className="col-sm-9">
-                        <select className="form-control" >
-                          {options.map((option) => (
-                            <option key={option.value} value={option.value}>
-                              {option.nomRegle}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" >Cycle</label>
-                      <div className="col-sm-9">
-                        <select className="form-control" >  {options.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.nomRegle}
-                          </option>
-                        ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Du</label>
-                      <div className="col-sm-9">
-                        <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" >Au</label>
-                      <div className="col-sm-9">
-                      <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Début</label>
-                      <div className="col-sm-9">
-                        <input id="nbJourCycle" name="nbJourCycle" type="time" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" htmlFor="libelleCycle" >Fin</label>
-                      <div className="col-sm-9">
-                        <input id="libelleCycle" name="libelleCycle" type="time" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle" >Base</label>
-                      <div className="col-sm-9">
-                        <input id="nbJourCycle" name="nbJourCycle" type="number" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">
-                    Fermer
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Ajouter
-                  </button>
-                </div>
-              </form>
-              {message && <div className="alert alert-success">{message}</div>}
-              {error && <div className="alert alert-danger">{error}</div>}
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
 
 
