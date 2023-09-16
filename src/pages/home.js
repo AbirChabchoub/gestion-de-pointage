@@ -1,7 +1,33 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
 function Home() {
+
+
+
+// Store a reference to the <p> element
+const employeeCountElement = document.getElementById('employeeCount');
+// Make a GET request to fetch the employee count
+axios.get('http://localhost:8080/api/employee/quantity')
+  .then((response) => {
+    // Assuming the response is in JSON format
+    const { count } = response.data;
+
+    // Update the content of the <p> element with the count
+    employeeCountElement.textContent = ` ${count}`;
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+  
+
+
+
+
+
   return (
     <div>
 
@@ -63,9 +89,9 @@ function Home() {
                 <div className="col-md-6 mb-4 stretch-card transparent">
                   <div className="card card-tale">
                     <div className="card-body">
-                      <p className="mb-4">Today’s Bookings</p>
-                      <p className="fs-30 mb-2">4006</p>
-                      <p>10.00% (30 days)</p>
+                      <p className="mb-4">Nombre des employés</p>
+                      <p className="fs-30 mb-2" id="employeeCount"></p>
+                   
                     </div>
                   </div>
                 </div>

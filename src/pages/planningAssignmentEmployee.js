@@ -17,23 +17,23 @@ function PlanningAssignmentEmp() {
               <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
               <br></br>
               <div className="row">
-                      <div className="col-md-6">
-                        <div className="form-group row">
-                          <label className="col-sm-3 col-form-label">Num employé</label>
-                          <div className="col-sm-9">
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-md-6">
-                        <div className="form-group row">
-                          <label className="col-sm-3 col-form-label" required>Nom employé</label>
-                          <div className="col-sm-9">
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
-                      </div>
+                <div className="col-md-6">
+                  <div className="form-group row">
+                    <label className="col-sm-3 col-form-label">Num employé</label>
+                    <div className="col-sm-9">
+                      <input type="text" className="form-control" />
                     </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group row">
+                    <label className="col-sm-3 col-form-label" required>Nom employé</label>
+                    <div className="col-sm-9">
+                      <input type="text" className="form-control" />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <br />
               <div className="row" >
                 <div className="col-md-12 grid-margin stretch-card">
@@ -43,16 +43,16 @@ function PlanningAssignmentEmp() {
                       <div className="row">
                         <div className="col-12">
                           <div className="table-responsive">
-                            <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
+                            <table id="example" className="display expandable-table" style={{ "width": "100%" }}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "70px;" }}>Num employé</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Nom et prénom</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Département</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Code planning</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Planning</th>
-                                 
-                                <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Action</th>
+                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{ "width": "70px" }}>Num employé</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Nom et prénom</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Département</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Code planning</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Planning</th>
+
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Action</th>
 
                                 </tr>
 
@@ -63,7 +63,7 @@ function PlanningAssignmentEmp() {
                                   <td className="sorting_1">Car insurance</td>
                                   <td>Business type 1</td><td>Jesse Thomas</td>
                                   <td>$1200</td>
-                                  
+
                                   <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
                                     <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                   </td>

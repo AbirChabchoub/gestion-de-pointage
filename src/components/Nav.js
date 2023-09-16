@@ -173,7 +173,7 @@ function nav(){
                 <li className="completed">
                   <div className="form-check">
                     <label className="form-check-label">
-                      <input className="checkbox" type="checkbox" checked/>
+                      <input className="checkbox" type="checkbox" defaultChecked/>
                       Schedule meeting for next week
                     </label>
                   </div>
@@ -182,7 +182,7 @@ function nav(){
                 <li className="completed">
                   <div className="form-check">
                     <label className="form-check-label">
-                      <input className="checkbox" type="checkbox" checked/>
+                      <input className="checkbox" type="checkbox"/>
                       Project review
                     </label>
                   </div>

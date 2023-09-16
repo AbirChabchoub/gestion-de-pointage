@@ -13,12 +13,12 @@ function DepartementSettingsTable() {
                                     <div className="row">
                                         <div className="col-12">
                                             <div className="table-responsive">
-                                                <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
+                                                <table id="example" className="display expandable-table" style="width: 100%">
                                                     <thead>
                                                         <tr role="row">
-                                                            <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "170px;" }}>Nom</th>
-                                                            <th className="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Description</th>
-                                                            <th className="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style={{ "width": "22px;" }}></th>
+                                                            <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style= "width: 170px;" >Nom</th>
+                                                            <th className="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style= "width: 51px;"  aria-sort="ascending">Description</th>
+                                                            <th className="details-control sorting_disabled" rowspan="1" colspan="1" aria-label="" style= "width: 22px;" ></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

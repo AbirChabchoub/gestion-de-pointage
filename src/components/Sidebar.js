@@ -36,7 +36,7 @@ function Sidebar() {
                 <ul className="nav flex-column sub-menu">
                   <li className="nav-item"><Link className="nav-link" to="/departmentSettings">Paramètres des départements</Link></li>
                   <li className="nav-item"><Link className="nav-link" to="/employees">Employés</Link></li>
-                  <li className="nav-item"><Link className="nav-link" to="/abscenceRegistration" active>Inscription abscence</Link></li>
+                  <li className="nav-item"><Link className="nav-link" to="/abscenceRegistration" active="true">Inscription abscence</Link></li>
                   <li className="nav-item"><Link className="nav-link" to="/leaveRegistration">Inscription congé</Link></li>
                   <li className="nav-item"><Link className="nav-link" to="/leaveRequest">Démissions</Link></li>
                   <li className="nav-item"><Link className="nav-link" to="/publicHoliday">Jours fériés</Link></li>

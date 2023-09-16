@@ -11,14 +11,16 @@ function DownloadPT() {
         <div className="container-fluid page-body-wrapper">
           <div className="main-panel download">
             <div className="content-wrapper">
-              <td>
-            
-              </td>
-              <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal" id="vidageButton"><i className="ti-reload btn-icon-prepend"></i> Synchronisation</button></td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" >Vidage pointeuse<i className="ti-trash btn-icon-append"></i> </button></td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge " > Supprimer pointage<i className="ti-close btn-icon-append"></i></button> </td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" > Importer pointage<i className="ti-printer btn-icon-append"></i></button> </td>
-
+              <table>
+              <thead>
+                <tr>
+                  <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal" ><i className="ti-reload btn-icon-prepend"></i> Synchronisation</button></th>
+                  <th> <button type="button" className="btn btn-outline-info btn-icon-text marge" >Vidage pointeuse<i className="ti-trash btn-icon-append"></i> </button></th>
+                  <th> <button type="button" className="btn btn-outline-info btn-icon-text marge " > Supprimer pointage<i className="ti-close btn-icon-append"></i></button> </th>
+                  <th> <button type="button" className="btn btn-outline-info btn-icon-text marge" > Importer pointage<i className="ti-upload btn-icon-append"></i></button> </th>
+                </tr>
+                </thead>
+                </table>
               <br />
               <div className="row" >
                 <div className="col-md-12 grid-margin stretch-card">
@@ -28,17 +30,17 @@ function DownloadPT() {
                       <div className="row">
                         <div className="col-12">
                           <div className="table-responsive">
-                            <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
+                            <table id="example" className="display expandable-table" style={{"width": "100%;"}}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "70px;" }}>Numéro Employé</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Nom et prénom</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Département</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Policy holder: activate to sort column ascending" style={{ "width": "43px;" }}>Mode Vérification</th>
-                                  <th claclassNamess="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Premium: activate to sort column ascending" style={{ "width": "59px;" }}>Entrée/Sortie</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{ "width": "43px;" }}>Date</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Heure</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Action</th>
+                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{"width": "70px"}}>Numéro Employé</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{"width": "51px"}}aria-sort="ascending">Nom et prénom</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Département</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Policy holder: activate to sort column ascending" style={{"width": "43px"}}>Mode Vérification</th>
+                                  <th claclassNamess="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Premium: activate to sort column ascending" style={{"width": "58px"}}>Entrée/Sortie</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Status: activate to sort column ascending" style={{"width": "64px"}}>Date</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Heure</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Action</th>
 
                                 </tr>
                               </thead>

@@ -15,10 +15,18 @@ function AbsenceRegistration() {
         <div className="container-fluid page-body-wrapper">
           <div className="main-panel">
             <div className="content-wrapper">
-            <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
-                            <td> <button type="button" className="btn btn-outline-info btn-icon-text marge">Synchroniser base pointeuse<i className="ti-printer btn-icon-append"></i> </button></td>
-                            <td> <button type="button" className="btn btn-outline-info btn-icon-text marge"> Transféré employé vers pointeuse<i className="ti-printer btn-icon-append"></i></button> </td>
+              <table>
+                <thead>
+                <tr>
+            <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></th>
+            <th> <button type="button" className="btn btn-outline-info btn-icon-text marge">Synchroniser base pointeuse<i className="ti-reload btn-icon-append"></i> </button></th>
+              <th> <button type="button" className="btn btn-outline-info btn-icon-text marge"> Transféré employé vers pointeuse<i className="ti-upload btn-icon-append"></i></button> </th>
+              </tr>
+              </thead>
+              </table>
+                          
                           <br/>
+
               <div className="row" >
                 <div className="col-md-12 grid-margin stretch-card">
                   <div className="card">
@@ -27,13 +35,13 @@ function AbsenceRegistration() {
                       <div className="row">
                         <div className="col-12">
                           <div className="table-responsive">
-                            <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
+                            <table id="example" className="display expandable-table" style={{"width": "100%"}}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "70px;" }}>Employé</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Motif</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Date</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Action</th>
+                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{"width": "70px"}}>Employé</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending"style={{"width": "51px"}} aria-sort="ascending">Motif</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Date</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Action</th>
 
                                 </tr>
                               </thead>

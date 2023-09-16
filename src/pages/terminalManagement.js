@@ -12,9 +12,9 @@ function TerminalManagement() {
           <div className="main-panel download">
             <div className="content-wrapper">
               <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal" ><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" >Connecter<i className="ti-printer btn-icon-append"></i> </button></td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge " > Déconnecter<i className="ti-printer btn-icon-append"></i></button> </td>
-              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" > Mise à jour<i className="ti-printer btn-icon-append"></i></button> </td>
+              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" >Connecter<i className="ti-rss btn-icon-append"></i> </button></td>
+              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge " > Déconnecter<i className="ti-new-window btn-icon-append"></i></button> </td>
+              <td> <button type="button" className="btn btn-outline-info btn-icon-text marge" > Mise à jour<i className="ti-reload btn-icon-append"></i></button> </td>
               <br />
               <div className="row" >
                 <div className="col-md-12 grid-margin stretch-card">
@@ -24,26 +24,26 @@ function TerminalManagement() {
                       <div className="row">
                         <div className="col-12">
                           <div className="table-responsive">
-                            <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
+                            <table id="example" className="display expandable-table" style={{"width": "100%"}}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{ "width": "70px;" }}>Nom</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px;" }} aria-sort="ascending">Connécté</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px;" }}>Num machine</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Policy holder: activate to sort column ascending" style={{ "width": "43px;" }}>Connection</th>
-                                  <th claclassNamess="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Premium: activate to sort column ascending" style={{ "width": "59px;" }}>Vitesse</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style={{ "width": "43px;" }}>Adresse IP</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Port</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Num Produit</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Utilisateur</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Administrateur</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Empreinte</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Carte</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Mot de passe</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Pointage</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Num série</th>
+                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{"width": "70px"}}>Nom</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{"width": "51px"}}aria-sort="ascending">Connécté</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px"}}>Num machine</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Policy holder: activate to sort column ascending" style={{"width": "43px"}}>Connection</th>
+                                  <th claclassNamess="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Premium: activate to sort column ascending" style={{"width": "58px"}}>Vitesse</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Status: activate to sort column ascending" style={{"width": "58px"}}>Adresse IP</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Port</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Num Produit</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Utilisateur</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Administrateur</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Empreinte</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Carte</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Mot de passe</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Pointage</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Num série</th>
 
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px;" }}>Action</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{"width": "64px"}}>Action</th>
 
                                 </tr>
                               </thead>

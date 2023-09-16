@@ -15,15 +15,15 @@ return(
           <div className="row">
             <div className="col-12">
               <div className="table-responsive">
-                <table id="example" className="display expandable-table" style={{'width':'100%'}}>
+                <table id="example" className="display expandable-table" style='width:100%'>
                   <thead>
                   <tr role="row">
-                    <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style={{"width": "70px;"}}>Date écriture</th>
-                    <th className="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style={{"width": "51px;"}} aria-sort="ascending">Employé</th>
-                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px;"}}>Date congé</th> 
-                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px;"}}>Motif</th> 
-                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px;"}}>Raison</th>      
-                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style={{"width": "58px;"}}>Observation</th>                   
+                    <th className="select-checkbox sorting_disabled" rowspan="1" colspan="1" aria-label="Quote#" style="width: 70px;">Date écriture</th>
+                    <th className="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Product: activate to sort column descending" style="width: 51px;" aria-sort="ascending">Employé</th>
+                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style="width: 58px;">Date congé</th> 
+                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style="width: 58px;">Motif</th> 
+                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style="width: 58px;">Raison</th>      
+                    <th className="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Business type: activate to sort column ascending" style="width: 58px;">Observation</th>                   
              
                   
                   
