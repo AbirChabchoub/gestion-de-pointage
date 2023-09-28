@@ -120,7 +120,7 @@ function DepartementSettings() {
     const numCarte = e.target.numCarte.value;
     const nationalite = e.target.nationalite.value;
     const numTelEmp = e.target.numTelEmp.value;
-    const privilege = e.target.privilege.value;
+   // const privilege = e.target.privilege.value;
     const remarqueEmp = e.target.remarqueEmp.value;
     const CIN = e.target.CIN.value;
     const numCNSS = e.target.numCNSS.value;
@@ -133,7 +133,7 @@ function DepartementSettings() {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const response = await instance.post('/api/employee/add-employee', {
         nomEmp,
-        prenomEmp, sexeEmp, dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp, privilege, remarqueEmp,  CIN, numCNSS, ECH, CAT, nbEnfant
+        prenomEmp,  dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp,sexeEmp,  remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant
       });
 
       console.log(response.data);
@@ -143,6 +143,49 @@ function DepartementSettings() {
       setErrorEmp("L'employé existe déjà");
     }
   };
+
+  //display depts into select 
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const instance = axios.create({ baseURL: 'http://localhost:8080' });
+        const { data } = await instance.get('/api/departement/get-all-departments');
+        console.log(data);
+        setOptions(data);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+    const[valuePrivilege,setValuePrivilege]=useState('');
+    const[valueDept,setValueDept]=useState('');
+    const[valueSexe,setValueSexe]=useState('');
+    const[valueTitre,setValueTitre]=useState('');
+
+    const handleSelectPrivilege = (e) => {
+      setValuePrivilege(e.target.value);
+    };
+  
+    const handleSelectDept = (e) => {
+      setValueDept(e.target.value);
+    };
+    const handleSelectSexe = (e) => {
+      setValueSexe(e.target.value);
+    };
+  
+    const handleSelectTitre = (e) => {
+      setValueTitre(e.target.value);
+    };
+
+
+ 
   return (
 
     <div>
@@ -243,7 +286,7 @@ function DepartementSettings() {
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Status: activate to sort column ascending" style={{ "width": "43px" }}>Num employé</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Num carte</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Status: activate to sort column ascending" style={{ "width": "43px" }}>Nationalité</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Tél</th>
+                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Téléphone</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Titre</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Privilége</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Date naissance</th>
@@ -251,7 +294,6 @@ function DepartementSettings() {
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Salaire</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Adresse</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Remarque</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Photo</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Département</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>CIN</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Num CNSS</th>
@@ -350,286 +392,264 @@ function DepartementSettings() {
               </button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmitEmployee} className="form-sample">               
+              <form onSubmit={handleSubmitEmployee} className="form-sample">
+                <div className="row">
+                  <div className="col-12 grid-margin">
+                    <div className="card">
+                      <div className="card-body">
                         <div className="row">
-                          <div className="col-12 grid-margin">
-                            <div className="card">
-                              <div className="card-body">
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Nom</label>
-                                      <div className="col-sm-9">
-                                        <input id="nomEmp" name="nomEmp" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="prenomEmp" >Prénom</label>
-                                      <div className="col-sm-9">
-                                        <input id="prenomEmp" name="prenomEmp" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="sexeEmp">Sexe</label>
-                                      <div className="col-sm-9">
-                                        <select className="form-control" name="sexeEmp">
-                                          <option value="Masculin">Masculin</option>
-                                          <option value="Feminin">Féminin</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="dateInscrit">Date Inscription</label>
-                                      <div className="col-sm-9">
-                                        <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="numIdEmp">N ID</label>
-                                      <div className="col-sm-9">
-                                        <input id="numIdEmp" name="numIdEmp" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="numEmp">N Employé</label>
-                                      <div className="col-sm-9">
-                                        <input id="numEmp" name="numEmp" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" >Membership</label>
-                                      <div className="col-sm-4">
-                                        <div className="form-check">
-                                          <label className="form-check-label">
-                                            <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios1" value="free" />
-                                            Free
-                                          </label>
-                                        </div>
-                                      </div>
-                                      <div className="col-sm-5">
-                                        <div className="form-check">
-                                          <label className="form-check-label">
-                                            <input type="radio" className="form-check-input" name="membershipRadios" id="membershipRadios2" value="option2" />
-                                            Professional
-                                          </label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="numCarte">N Carte</label>
-                                      <div className="col-sm-9">
-                                        <input id="numCarte" name="numCarte" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="nationalite">Nationalité</label>
-                                      <div className="col-sm-9">
-                                        <input id="nationalite" name="nationalite" type="texte" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="numTelEmp">Téléphone</label>
-                                      <div className="col-sm-9">
-                                        <input id="numTelEmp" name="numTelEmp" type="tel" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" >Titre</label>
-                                      <div className="col-sm-9">
-                                        <select className="form-control">
-                                          <option value="Responsable">Responsable</option>
-                                          <option value="Cadre">Cadre</option>
-                                          <option value="Ouvrier">Ouvrier</option>
-                                          <option value="Technicien">Technicien</option>
-                                          <option value="Magasinier">Magasinier</option>
-                                          <option value="Etude">Etude</option>
-                                          <option value="Secretaire">Sécrétaire</option>
-                                          <option value="Commercial">Commercial</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="privilege">Privilége</label>
-                                      <div className="col-sm-9">
-                                        <select className="form-control">
-                                          <option value="Administrateur">Administrateur</option>
-                                          <option value="Utilisateur">Utilisateur</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="dateNaissance">Date Naissance</label>
-                                      <div className="col-sm-9">
-                                        <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="dateEmbauche">Date d'embauche</label>
-                                      <div className="col-sm-9">
-                                        <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="salaireEmp">Salaire</label>
-                                      <div className="col-sm-9">
-                                        <input id="salaireEmp" name="salaireEmp" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="adresseEmp">Addresse </label>
-                                      <div className="col-sm-9">
-                                        <input id="adresseEmp" name="adresseEmp" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="remarqueEmp">Remarque </label>
-                                      <div className="col-sm-9">
-                                        <input id="remarqueEmp" name="remarqueEmp" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="Departement">Département</label>
-                                      <div className="col-sm-9">
-                                        <select className="form-control">
-                                          <option value="ServiceApresVente">Service aprés vente</option>
-                                          <option value="Commercial">Commercial</option>
-                                          <option value="Technique">Technique</option>
-                                          <option value="Administration">Administration</option>
-                                          <option value="Etude">Etude</option>
-                                        </select>
-                                      </div>
-
-                                    </div>
-
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="CIN">CIN </label>
-                                      <div className="col-sm-9">
-                                        <input id="CIN" name="CIN" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="numCNSS">N CNSS </label>
-                                      <div className="col-sm-9">
-                                        <input id="numCNSS" name="numCNSS" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="ECH">Echellon </label>
-                                      <div className="col-sm-9">
-                                        <input id="ECH" name="ECH" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                </div>
-
-
-
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="CAT">Catégorie </label>
-                                      <div className="col-sm-9">
-                                        <input id="CAT" name="CAT" type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" htmlFor="nbEnfant">Nombre d'enfant </label>
-                                      <div className="col-sm-9">
-                                        <input id="nbEnfant" name="nbEnfant" type="number" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="modal-footer">
-
-
-
-                                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                  <button type="submit" className="btn btn-primary">Ajouter</button>
-                                </div>
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Nom</label>
+                              <div className="col-sm-9">
+                                <input id="nomEmp" name="nomEmp" type="text" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="prenomEmp" >Prénom</label>
+                              <div className="col-sm-9">
+                                <input id="prenomEmp" name="prenomEmp" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
                         </div>
-                     
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="sexeEmp">Sexe</label>
+                              <div className="col-sm-9">
+                                <select className="form-control" name="sexeEmp" id='sexeEmp' value={valueSexe} onChange={handleSelectSexe}>
+                                  <option value="Masculin">Masculin</option>
+                                  <option value="Feminin">Féminin</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="dateInscrit">Date Inscription</label>
+                              <div className="col-sm-9">
+                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="numIdEmp">N ID</label>
+                              <div className="col-sm-9">
+                                <input id="numIdEmp" name="numIdEmp" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="numEmp">N Employé</label>
+                              <div className="col-sm-9">
+                                <input id="numEmp" name="numEmp" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                       
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="numCarte">N Carte</label>
+                              <div className="col-sm-9">
+                                <input id="numCarte" name="numCarte" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="nationalite">Nationalité</label>
+                              <div className="col-sm-9">
+                                <input id="nationalite" name="nationalite" type="texte" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="numTelEmp">Téléphone</label>
+                              <div className="col-sm-9">
+                                <input id="numTelEmp" name="numTelEmp" type="tel" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="titre">Titre</label>
+                              <div className="col-sm-9">
+                                <select className="form-control" name="titre" id="titre" value={valueTitre} onChange={handleSelectTitre}>
+                                  <option value="Responsable">Responsable</option>
+                                  <option value="Cadre">Cadre</option>
+                                  <option value="Ouvrier">Ouvrier</option>
+                                  <option value="Technicien">Technicien</option>
+                                  <option value="Magasinier">Magasinier</option>
+                                  <option value="Etude">Etude</option>
+                                  <option value="Secretaire">Sécrétaire</option>
+                                  <option value="Commercial">Commercial</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="privilege" >Privilége</label>
+                              <div className="col-sm-9">
+                                <select className="form-control" name="privilege" id="privilege" value={valuePrivilege} onChange={handleSelectPrivilege}>
+                                  <option value="Administrateur">Administrateur</option>
+                                  <option value="Utilisateur">Utilisateur</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="dateNaissance">Date Naissance</label>
+                              <div className="col-sm-9">
+                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="dateEmbauche">Date d'embauche</label>
+                              <div className="col-sm-9">
+                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="salaireEmp">Salaire</label>
+                              <div className="col-sm-9">
+                                <input id="salaireEmp" name="salaireEmp" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="adresseEmp">Adresse </label>
+                              <div className="col-sm-9">
+                                <input id="adresseEmp" name="adresseEmp" type="text" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="remarqueEmp">Remarque </label>
+                              <div className="col-sm-9">
+                                <input id="remarqueEmp" name="remarqueEmp" type="text" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="departement">Département</label>
+                              <div className="col-sm-9">
+                                <select className="form-control"  value={valueDept} onChange={handleSelectDept}>
+                                  {options.map((option) => (
+                                    <option key={option.idDept} value={option.value}>
+                                      {option.nomDept}
+                                    </option>))}
+                                </select>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="CIN">CIN </label>
+                              <div className="col-sm-9">
+                                <input id="CIN" name="CIN" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="numCNSS">N CNSS </label>
+                              <div className="col-sm-9">
+                                <input id="numCNSS" name="numCNSS" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="ECH">Echellon </label>
+                              <div className="col-sm-9">
+                                <input id="ECH" name="ECH" type="text" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+
+
+                        <div className="row">
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="CAT">Catégorie </label>
+                              <div className="col-sm-9">
+                                <input id="CAT" name="CAT" type="text" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="nbEnfant">Nombre d'enfant </label>
+                              <div className="col-sm-9">
+                                <input id="nbEnfant" name="nbEnfant" type="number" className="form-control" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="modal-footer">
+
+
+
+                          <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                          <button type="submit" className="btn btn-primary">Ajouter</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </form>
               {messageEmp && <div className="alert alert-success">{messageEmp}</div>}
               {errorEmp && <div className="alert alert-danger">{errorEmp}</div>}
@@ -655,7 +675,7 @@ function DepartementSettings() {
               <form onSubmit={handleSubmit} className="form-sample">
 
 
-             < div className="row">
+                < div className="row">
                   <div className="col-md-6">
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="nomDept">Nom</label>

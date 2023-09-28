@@ -4752,9 +4752,9 @@
 		_fnProcessingDisplay( settings, true );
 	
 		/* Calculate sizes for columns */
-		if ( features.bAutoWidth ) {
-			_fnCalculateColumnWidths( settings );
-		}
+		//if ( features.bAutoWidth ) {
+		//	_fnCalculateColumnWidths( settings );
+	//	}
 	
 		for ( i=0, iLen=columns.length ; i<iLen ; i++ ) {
 			column = columns[i];
