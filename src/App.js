@@ -15,10 +15,7 @@ import Login from './pages/login';
 import Signup from './pages/signup';
 import DownloadPT from './pages/downloadPT';
 import TerminalManagement from './pages/terminalManagement';
-import AddEmployee from './pages/addEmployee';
-import AddDepartement from './pages/addDepartement';
-import AddAbscence from './pages/addAbscenceForm';
-import AddLeave from './pages/addLeave';
+
 import PlanningAssignmentEmp from './pages/planningAssignmentEmployee';
 import PlanningAssignmentDep from './pages/planningAssignmentDep';
 import AttendanceLog from './pages/attendanceLog';
@@ -45,28 +42,13 @@ function App() {
         <Route path="/publicHoliday" element={<PublicHoliday/>}/>
         <Route path="/presenceRules" element={<PresenceRules/>}/>
         <Route path="/workCycle" element={<WorkCycle/>}/>
-        <Route path="/planingList" element={<PlanningList/>}/>
-        <Route path="/addEmployee" element={<AddEmployee/>}/>
-        <Route path="/addDepartement" element={<AddDepartement/>}/>
-        <Route path="/addAbscence" element={<AddAbscence/>}/>
-        <Route path="/addLeave" element={<AddLeave/>}/>
+        <Route path="/planingList" element={<PlanningList/>}/>         
         <Route path="/AssignmentPlaningToEmployees" element={<PlanningAssignmentEmp/>}/>
         <Route path="/AssignmentPlaningToDepartments" element={<PlanningAssignmentDep/>}/>
         <Route path="/AttendanceLog" element={<AttendanceLog/>}/>
         <Route path="/manualPointing" element={<ManualPointing/>}/>
         <Route path="/personalCumul" element={<PersonalCumul/>}/>
         <Route path="/departmentCumul" element={<DepartementCumul/>}/>
-
-
-
-
-
-
-
-
-
-
-
       </Routes>
 
   

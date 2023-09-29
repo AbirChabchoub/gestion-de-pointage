@@ -120,7 +120,7 @@ function DepartementSettings() {
     const numCarte = e.target.numCarte.value;
     const nationalite = e.target.nationalite.value;
     const numTelEmp = e.target.numTelEmp.value;
-   // const privilege = e.target.privilege.value;
+    // const privilege = e.target.privilege.value;
     const remarqueEmp = e.target.remarqueEmp.value;
     const CIN = e.target.CIN.value;
     const numCNSS = e.target.numCNSS.value;
@@ -133,7 +133,7 @@ function DepartementSettings() {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const response = await instance.post('/api/employee/add-employee', {
         nomEmp,
-        prenomEmp,  dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp,sexeEmp,  remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant
+        prenomEmp, dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp, sexeEmp, remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant
       });
 
       console.log(response.data);
@@ -164,28 +164,33 @@ function DepartementSettings() {
 
 
 
-    const[valuePrivilege,setValuePrivilege]=useState('');
-    const[valueDept,setValueDept]=useState('');
-    const[valueSexe,setValueSexe]=useState('');
-    const[valueTitre,setValueTitre]=useState('');
+  const [valuePrivilege, setValuePrivilege] = useState('Utilisateur');
+  const [valueDept, setValueDept] = useState('Développement');
+  const [valueSexe, setValueSexe] = useState('Masculin');
+  const [valueTitre, setValueTitre] = useState('Responsable');
 
-    const handleSelectPrivilege = (e) => {
-      setValuePrivilege(e.target.value);
-    };
-  
-    const handleSelectDept = (e) => {
-      setValueDept(e.target.value);
-    };
-    const handleSelectSexe = (e) => {
-      setValueSexe(e.target.value);
-    };
-  
-    const handleSelectTitre = (e) => {
-      setValueTitre(e.target.value);
-    };
+  const handleSelectPrivilege = (e) => {
+    const selectedValue = e.target.value;
+    console.log('Selected Privilege:', selectedValue);
+    setValuePrivilege(selectedValue);
+  };
+
+  const handleSelectDept = (e) => {
+    const selectedValue = e.target.value;
+    setValueDept(selectedValue);
+  };
+  const handleSelectSexe = (e) => {
+    const selectedValue = e.target.value;
+    setValueSexe(selectedValue);
+  };
+
+  const handleSelectTitre = (e) => {
+    const selectedValue = e.target.value;
+    setValueTitre(selectedValue);
+  };
 
 
- 
+
   return (
 
     <div>
@@ -326,8 +331,8 @@ function DepartementSettings() {
                                       <td>{employee.numCarte}</td>
                                       <td>{employee.nationalite}</td>
                                       <td>{employee.numTelEmp}</td>
-
-                                      <td>{employee.privilege}</td>
+                                      <td>{valueTitre}</td>
+                                      <td>{valuePrivilege}</td>
                                       <td>{employee.dateNaissance}</td>
 
                                       <td>{employee.dateEmbauche}</td>
@@ -336,7 +341,7 @@ function DepartementSettings() {
                                       <td>{employee.adresseEmp}</td>
 
                                       <td>{employee.remarqueEmp}</td>
-                                      <td>{employee.photo}</td>
+                                      <td>{valueDept}</td>
 
                                       <td>{employee.CIN}</td>
                                       <td>{employee.numCNSS}</td>
@@ -374,12 +379,6 @@ function DepartementSettings() {
           </div>
         </div>
       </div>
-
-
-
-
-
-
 
 
       <div className="modal fade" id="exampleModalEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -454,7 +453,7 @@ function DepartementSettings() {
                               </div>
                             </div>
                           </div>
-                       
+
                         </div>
 
                         <div className="row">
@@ -575,7 +574,7 @@ function DepartementSettings() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="departement">Département</label>
                               <div className="col-sm-9">
-                                <select className="form-control"  value={valueDept} onChange={handleSelectDept}>
+                                <select className="form-control" value={valueDept} onChange={handleSelectDept}>
                                   {options.map((option) => (
                                     <option key={option.idDept} value={option.value}>
                                       {option.nomDept}

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
-import employeService from '../'
+
 function PlanningAssignmentEmp() {
 
   //display cycles into select 
@@ -23,7 +23,6 @@ function PlanningAssignmentEmp() {
 
     fetchData();
   }, []);
-
 
   //display employees into select 
   const [employees, setEmployees] = useState([]);
@@ -79,33 +78,6 @@ function PlanningAssignmentEmp() {
     fetchData();
   }, []);
 
-  //add new employee-departement
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
-    // Get the form data from the input fields of departments
-    const nomEmp=e.target.nomEmp.value;
-    const nomDept=e.target.nomDept.value;
-    const planning=e.target.planning.value;
-    const cycle=e.target.cycle.value;
-    const dateDeb = e.target.dateDeb.value;
-    const dateFin = e.target.dateFin.value;
-    try {
-      const instance = axios.create({ baseURL: 'http://localhost:8080' });
-      const response = await instance.post('/api/planning-employe/add', {
-      nomEmp,nomDept,planning,cycle, dateDeb, dateFin
-      });
-
-      console.log(response.data);
-      setMessage('Cycle de travail créé avec succès');
-    } catch (err) {
-      console.error(err);
-      setError('Le cycle existe déjà');
-    }
-  };
-
   //fetch employees data
   const [employeesPlan, setEmployeesPlan] = useState([]);
   useEffect(() => {
@@ -124,25 +96,68 @@ function PlanningAssignmentEmp() {
     fetchData();
   }, []);
 
-    const[valueEmp,setValueEmp]=useState('');
-    const[valueDept,setValueDept]=useState('');
-    const[valuePlanning,setValuePlanning]=useState('');
-    const[valueCycle,setValueCycle]=useState('');
+  //add new employee-departement
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    // Get the form data from the input fields of departments
+    const nomEmp = e.target?.nomEmp?.value;
+    const nomDept = e.target?.nomDept?.value;
+    const planning = e.target?.planning?.value;
+    const cycle = e.target?.cycle?.value;
+    const dateDeb = e.target?.dateDeb?.value;
+    const dateFin = e.target?.dateFin?.value;
 
-    const handleSelectEmploye = (e) => {
-      setValueEmp(e.target.value);
-    };
-  
-    const handleSelectDept = (e) => {
-      setValueDept(e.target.value);
-    };
-    const handleSelectPlanning = (e) => {
-      setValuePlanning(e.target.value);
-    };
-  
-    const handleSelectCycle = (e) => {
-      setValueCycle(e.target.value);
-    };
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const response = await instance.post('/api/planning-employe/add', {
+        nomEmp, nomDept,planning, cycle, dateDeb, dateFin
+      });
+      console.log(response.data);
+      setMessage('Employé Assigné avec succès');
+    } catch (err) {
+      console.error(err);
+      setError("L'assignement existe déjà");
+    }
+  };
+
+  //select inputs
+  const [valueEmp, setValueEmp] = useState('');
+  const [valueDept, setValueDept] = useState('Développement');
+  const [valuePlanning, setValuePlanning] = useState('');
+  const [valueCycle, setValueCycle] = useState('');
+
+  const handleSelectEmploye = (e) => {
+    const selectedValue = e.target.value;
+    setValueEmp(selectedValue);
+  };
+  const handleSelectDept = (e) => {
+    const selectedValue = e.target.value;
+    setValueDept(selectedValue);
+  };
+  const handleSelectPlanning = (e) => {
+    const selectedValue = e.target.value;
+    setValuePlanning(selectedValue);
+  };
+  const handleSelectCycle = (e) => {
+    const selectedValue = e.target.value;
+    setValueCycle(selectedValue);
+  };
+
+ //delete item
+ const handleDeleteEmpDept = async (e, idPlanEmp) => {
+  e.preventDefault();
+
+  try {
+    const instance = axios.create({ baseURL: 'http://localhost:8080' });
+    const { data } = await instance.delete(`/api/planning-employe/delete/${idPlanEmp}`);      // Handle the response data or any UI updates as needed
+    console.log(`Department with ID ${idPlanEmp} deleted successfully.`);
+  } catch (error) {
+    // Handle errors, e.g., display an error message
+    console.error(`Error deleting department: ${error.message}`);
+  }
+};
 
   return (
     <div>
@@ -159,7 +174,6 @@ function PlanningAssignmentEmp() {
                     <td> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></td>
                   </tr>
                 </thead>
-
               </table>
               <br></br>
               <div className="row">
@@ -197,28 +211,22 @@ function PlanningAssignmentEmp() {
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Département</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Code planning</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Planning</th>
-
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Action</th>
-
                                 </tr>
 
                               </thead>
                               <tbody>
                                 {employeesPlan.map((employeePlan, index) => {
                                   // Fetch the employee using the ID
-                                 // const employee = employeService.getEmployeById(employeePlan.codeEmp);
+                                  // const employee = employeService.getEmployeById(employeePlan.codeEmp);
 
                                   return (
                                     <tr className="odd" key={employeePlan.idPlanEmp}>
                                       <td>{employeePlan.debut}</td>
                                       <td>{employeePlan.fin}</td>
                                       <td>
-                                        <button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep">
-                                          <i className="ti-pencil text-primary"></i>
-                                        </button>
-                                        <button type="button" className="btn btn-inverse-info btn-icon">
-                                          <i className="ti-trash text-primary"></i>
-                                        </button>
+                                        <button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep"><i className="ti-pencil text-primary"></i></button>
+                                        <button type="button" className="btn btn-inverse-info btn-icon" onClick={(e) => handleDeleteEmpDept(e, employeePlan?.idPlanEmp)}><i className="ti-trash text-primary"></i></button>
                                       </td>
                                     </tr>
                                   );
@@ -255,7 +263,7 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Employé</label>
                       <div className="col-sm-9">
-                        <select className="form-control"   onChange={handleSelectEmploye}>
+                        <select className="form-control" id="nomEmp" name="nomEmp" value={valueEmp} onChange={handleSelectEmploye}>
                           {employees.map((employee) => (
                             <option key={employee.codeEmp} value={employee.value} >
                               {employee.nomEmp}
@@ -269,12 +277,11 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="departement">Département</label>
                       <div className="col-sm-9">
-                        <select className="form-control"  value={valueDept} onChange={handleSelectDept} >
-                          {departments.map((departement) => (
-                            <option key={departement.idDept} value={departement.value}>
-                              {departement.nomDept}
-                            </option>
-                          ))}
+                        <select className="form-control" id="departement" name="departement" value={valueDept} onChange={handleSelectDept}>
+                          {departments.map((option) => (
+                            <option key={option.idDept} value={option.value}>
+                              {option.nomDept}
+                            </option>))}
                         </select>
                       </div>
                     </div>
@@ -285,7 +292,7 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="planning">Planning</label>
                       <div className="col-sm-9">
-                        <select className="form-control"  value={valuePlanning} onChange={handleSelectPlanning}>
+                        <select className="form-control" id="planning" name="planning" value={valuePlanning} onChange={handleSelectPlanning}>
                           {plannings.map((planning) => (
                             <option key={planning.idPlanning} value={planning.value}>
                               {planning.libellePlanning}
@@ -300,12 +307,12 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="libelleCycle" >Cycle</label>
                       <div className="col-sm-9">
-                        <select className="form-control"  value={valueCycle} onChange={handleSelectCycle}>  
-                        {Cycles.map((cycle) => (
-                          <option key={cycle.idCycle} value={cycle.value}>
-                            {cycle.libelleCycle}
-                          </option>
-                        ))}
+                        <select className="form-control" id="libelleCycle" name="libelleCycle" value={valueCycle} onChange={handleSelectCycle}>
+                          {Cycles.map((cycle) => (
+                            <option key={cycle.idCycle} value={cycle.value}>
+                              {cycle.libelleCycle}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -321,26 +328,18 @@ function PlanningAssignmentEmp() {
                       </div>
                     </div>
                   </div>
-
                   <div className="col-md-6">
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="fin" >Au</label>
                       <div className="col-sm-9">
                         <input id="nbJourCycle" name="nbJourCycle" type="date" className="form-control" />
-
                       </div>
                     </div>
                   </div>
                 </div>
-
-                      
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">
-                    Fermer
-                  </button>
-                  <button type="submit" className="btn btn-primary">
-                    Ajouter
-                  </button>
+                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                  <button type="submit" className="btn btn-primary">Ajouter</button>
                 </div>
               </form>
               {message && <div className="alert alert-success">{message}</div>}

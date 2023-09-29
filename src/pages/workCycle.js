@@ -319,8 +319,10 @@ const handleSubmit = async (e) => {
           </div>
         </div>
       </div>
+
+      
       <div className="modal fade" id="exampleModalUpdateDep" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        {/* Step 3: Pass selectedCycle as props to the modal */}
+     
         {selectedCycle && (
           <EditWorkCycle theWorkCycle={selectedCycle} />
         )}

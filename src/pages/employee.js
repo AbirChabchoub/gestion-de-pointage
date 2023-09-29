@@ -36,53 +36,44 @@ function Employee() {
     }
   };
 
-  //add new employee
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-
-    // Get the form data from the input fields of departments
-    const nomEmp = e.target.nomEmp.value;
-    const prenomEmp = e.target.prenomEmp.value;
-    const sexeEmp = e.target.sexeEmp.value;
-    const dateInscrit = e.target.dateInscrit.value;
-    const numIdEmp = e.target.numIdEmp.value;
-    const numEmp = e.target.numEmp.value;
-    const numCarte = e.target.numCarte.value;
-    const nationalite = e.target.nationalite.value;
-    const numTelEmp = e.target.numTelEmp.value;
-    const dateNaissance = e.target.dateNaissance.value;
-    const dateEmbauche = e.target.dateEmbauche.value;
-    const salaireEmp = e.target.salaireEmp.value;
+   // add new employee
+   const [messageEmp, setMessageEmp] = useState("");
+   const [errorEmp, setErrorEmp] = useState("");
+   const handleSubmitEmployee = async (e) => {
+     e.preventDefault(); // Prevent the default form submission
+     // Get the form data from the input fields
+     const nomEmp = e.target.nomEmp.value;
+     const prenomEmp = e.target.prenomEmp.value;
+     const sexeEmp = e.target.sexeEmp.value;
+     const dateInscrit = e.target.dateInscrit.value;
+     const numIdEmp = e.target.numIdEmp.value;
+     const numEmp = e.target.numEmp.value;
+     const numCarte = e.target.numCarte.value;
+     const nationalite = e.target.nationalite.value;
+     const numTelEmp = e.target.numTelEmp.value;
+     // const privilege = e.target.privilege.value;
+     const remarqueEmp = e.target.remarqueEmp.value;
+     const CIN = e.target.CIN.value;
+     const numCNSS = e.target.numCNSS.value;
+     const ECH = e.target.ECH.value;
+     const CAT = e.target.CAT.value;
+     const nbEnfant = e.target.nbEnfant.value;
     const adresseEmp = e.target.adresseEmp.value;
-    const remarqueEmp = e.target.remarqueEmp.value;
-    const CIN = e.target.CIN.value;
-    const numCNSS = e.target.numCNSS.value;
-    const ECH = e.target.ECH.value;
-    const CAT = e.target.CAT.value;
-    const nbEnfant = e.target.nbEnfant.value;
-    const email = e.target.email.value;
-    const mdp = e.target.mdp.value;
-    const departement = e.target.departement.value;
-
-
-
-
-    try {
-      const instance = axios.create({ baseURL: 'http://localhost:8080' });
-      const response = await instance.post('/api/employee/add-employee', {
-        nomEmp, prenomEmp, sexeEmp, dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp, dateNaissance, dateEmbauche, salaireEmp,
-        adresseEmp, remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant, email, mdp,departement
-      });
-
-      console.log(response.data);
-      setMessage('Employé créé avec succès');
-    } catch (err) {
-      console.error(err);
-      setError("l'employé existe déjà");
-    }
-  };
+ 
+     try {
+       const instance = axios.create({ baseURL: 'http://localhost:8080' });
+       const response = await instance.post('/api/employee/add-employee', {
+         nomEmp, prenomEmp, dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp, 
+         sexeEmp, remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant,adresseEmp
+       });
+ 
+       console.log(response.data);
+       setMessageEmp('Employé ajouté avec succès');
+     } catch (err) {
+       console.error(err);
+       setErrorEmp("L'employé existe déjà");
+     }
+   };
 
 
   //display cycles into select 
@@ -103,10 +94,31 @@ function Employee() {
     fetchData();
   }, []);
 
-  const[value,setValue]=useState('');
-  function handleSelect(event){
-    setValue(event.target.value)
-  }
+  const [valuePrivilege, setValuePrivilege] = useState('Utilisateur');
+  const [valueDept, setValueDept] = useState('Développement');
+  const [valueSexe, setValueSexe] = useState('Masculin');
+  const [valueTitre, setValueTitre] = useState('Responsable');
+
+  const handleSelectPrivilege = (e) => {
+    const selectedValue = e.target.value;
+    console.log('Selected Privilege:', selectedValue);
+    setValuePrivilege(selectedValue);
+  };
+
+  const handleSelectDept = (e) => {
+    const selectedValue = e.target.value;
+    setValueDept(selectedValue);
+  };
+  const handleSelectSexe = (e) => {
+    const selectedValue = e.target.value;
+    setValueSexe(selectedValue);
+  };
+
+  const handleSelectTitre = (e) => {
+    const selectedValue = e.target.value;
+    setValueTitre(selectedValue);
+  };
+
   return (
     <div>
       <Nav />
@@ -185,8 +197,8 @@ function Employee() {
                                       <td>{employee.numCarte}</td>
                                       <td>{employee.nationalite}</td>
                                       <td>{employee.numTelEmp}</td>
-
-                                      <td>{employee.privilege}</td>
+                                      <td>{valueTitre}</td>
+                                      <td>{valuePrivilege}</td>
                                       <td>{employee.dateNaissance}</td>
 
                                       <td>{employee.dateEmbauche}</td>
@@ -195,7 +207,7 @@ function Employee() {
                                       <td>{employee.adresseEmp}</td>
 
                                       <td>{employee.remarqueEmp}</td>
-                                      <td>{employee.photo}</td>
+                                      <td>{valueDept}</td>
 
                                       <td>{employee.CIN}</td>
                                       <td>{employee.numCNSS}</td>
@@ -210,6 +222,9 @@ function Employee() {
                                       </td>
                                     </tr>
                                   })}
+
+
+
                               </tbody>
                             </table>
                           </div>
@@ -227,7 +242,7 @@ function Employee() {
 
 
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModalEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -237,25 +252,25 @@ function Employee() {
               </button>
             </div>
             <div className="modal-body">
-              <div className="row">
-                <div className="col-12 grid-margin">
-                  <div className="card">
-                    <div className="card-body">
-                      <form className="form-sample" onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmitEmployee} className="form-sample">
+                <div className="row">
+                  <div className="col-12 grid-margin">
+                    <div className="card">
+                      <div className="card-body">
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Nom </label>
+                              <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Nom</label>
                               <div className="col-sm-9">
-                                <input type="text" className="form-control" id="nomEmp" name="nomEmp" />
+                                <input id="nomEmp" name="nomEmp" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
                           <div className="col-md-6">
                             <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" htmlFor="prenomEmp"> Prénom</label>
+                              <label className="col-sm-3 col-form-label" htmlFor="prenomEmp" >Prénom</label>
                               <div className="col-sm-9">
-                                <input type="text" className="form-control" id="prenomEmp" name="prenomEmp" />
+                                <input id="prenomEmp" name="prenomEmp" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -265,9 +280,9 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="sexeEmp">Sexe</label>
                               <div className="col-sm-9">
-                                <select className="form-control"  onChange={handleSelect}>
-                                  <option>Masculin</option>
-                                  <option>Féminin</option>
+                                <select className="form-control" name="sexeEmp" id='sexeEmp' value={valueSexe} onChange={handleSelectSexe}>
+                                  <option value="Masculin">Masculin</option>
+                                  <option value="Feminin">Féminin</option>
                                 </select>
                               </div>
                             </div>
@@ -276,7 +291,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateInscrit">Date Inscription</label>
                               <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" id="dateInscrit" name="dateInscrit" />
+                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" />
                               </div>
                             </div>
                           </div>
@@ -286,7 +301,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numIdEmp">N ID</label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="numIdEmp" name="numIdEmp" />
+                                <input id="numIdEmp" name="numIdEmp" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -295,10 +310,11 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numEmp">N Employé</label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="numEmp" name="numEmp" />
+                                <input id="numEmp" name="numEmp" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
+
                         </div>
 
                         <div className="row">
@@ -306,7 +322,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numCarte">N Carte</label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="numCarte" name="numCarte" />
+                                <input id="numCarte" name="numCarte" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -315,7 +331,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="nationalite">Nationalité</label>
                               <div className="col-sm-9">
-                                <input type="texte" className="form-control" id="nationalite" name="nationalite" />
+                                <input id="nationalite" name="nationalite" type="texte" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -326,24 +342,24 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numTelEmp">Téléphone</label>
                               <div className="col-sm-9">
-                                <input type="tel" className="form-control" id="numTelEmp" name="numTelEmp" />
+                                <input id="numTelEmp" name="numTelEmp" type="tel" className="form-control" />
                               </div>
                             </div>
                           </div>
 
                           <div className="col-md-6">
                             <div className="form-group row">
-                              <label className="col-sm-3 col-form-label"  >Titre</label>
+                              <label className="col-sm-3 col-form-label" htmlFor="titre">Titre</label>
                               <div className="col-sm-9">
-                                <select className="form-control" onChange={handleSelect}>
-                                  <option>Responsable</option>
-                                  <option>Cadre</option>
-                                  <option>Ouvrier</option>
-                                  <option>Technicien</option>
-                                  <option>Magasinier</option>
-                                  <option>Etude</option>
-                                  <option>Sécrétaire</option>
-                                  <option>Commercial</option>
+                                <select className="form-control" name="titre" id="titre" value={valueTitre} onChange={handleSelectTitre}>
+                                  <option value="Responsable">Responsable</option>
+                                  <option value="Cadre">Cadre</option>
+                                  <option value="Ouvrier">Ouvrier</option>
+                                  <option value="Technicien">Technicien</option>
+                                  <option value="Magasinier">Magasinier</option>
+                                  <option value="Etude">Etude</option>
+                                  <option value="Secretaire">Sécrétaire</option>
+                                  <option value="Commercial">Commercial</option>
                                 </select>
                               </div>
                             </div>
@@ -353,11 +369,11 @@ function Employee() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group row">
-                              <label className="col-sm-3 col-form-label">Privilége</label>
+                              <label className="col-sm-3 col-form-label" htmlFor="privilege" >Privilége</label>
                               <div className="col-sm-9">
-                                <select className="form-control" onChange={handleSelect}>
-                                  <option>Administrateur</option>
-                                  <option>Utilisateur</option>
+                                <select className="form-control" name="privilege" id="privilege" value={valuePrivilege} onChange={handleSelectPrivilege}>
+                                  <option value="Administrateur">Administrateur</option>
+                                  <option value="Utilisateur">Utilisateur</option>
                                 </select>
                               </div>
                             </div>
@@ -367,7 +383,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateNaissance">Date Naissance</label>
                               <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" id="dateNaissance" name="dateNaissance" />
+                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" />
                               </div>
                             </div>
                           </div>
@@ -378,7 +394,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateEmbauche">Date d'embauche</label>
                               <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" id="dateEmbauche" name="dateEmbauche" />
+                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy" />
                               </div>
                             </div>
                           </div>
@@ -387,7 +403,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="salaireEmp">Salaire</label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="salaireEmp" name="salaireEmp" />
+                                <input id="salaireEmp" name="salaireEmp" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -396,9 +412,9 @@ function Employee() {
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" htmlFor="adresseEmp">Addresse </label>
+                              <label className="col-sm-3 col-form-label" htmlFor="adresseEmp">Adresse </label>
                               <div className="col-sm-9">
-                                <input type="text" className="form-control" id="adresseEmp" name="adresseEmp" />
+                                <input id="adresseEmp" name="adresseEmp" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -407,7 +423,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="remarqueEmp">Remarque </label>
                               <div className="col-sm-9">
-                                <input type="text" className="form-control" id="remarqueEmp" name="remarqueEmp" />
+                                <input id="remarqueEmp" name="remarqueEmp" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -419,11 +435,11 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="departement">Département</label>
                               <div className="col-sm-9">
-                                <select className="form-control" onChange={handleSelect}>
-                                {options.map((option) => (
-                          <option key={option.idDept} value={option.value}>
-                            {option.nomDept}
-                          </option>  ))}
+                                <select className="form-control" value={valueDept} onChange={handleSelectDept}>
+                                  {options.map((option) => (
+                                    <option key={option.idDept} value={option.value}>
+                                      {option.nomDept}
+                                    </option>))}
                                 </select>
                               </div>
 
@@ -434,7 +450,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="CIN">CIN </label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="CIN" name="CIN" />
+                                <input id="CIN" name="CIN" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -445,7 +461,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numCNSS">N CNSS </label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="numCNSS" name="numCNSS" />
+                                <input id="numCNSS" name="numCNSS" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -454,7 +470,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="ECH">Echellon </label>
                               <div className="col-sm-9">
-                                <input type="text" className="form-control" id="ECH" name="ECH" />
+                                <input id="ECH" name="ECH" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -468,7 +484,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="CAT">Catégorie </label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="CAT" name="CAT" />
+                                <input id="CAT" name="CAT" type="text" className="form-control" />
                               </div>
                             </div>
                           </div>
@@ -477,51 +493,40 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="nbEnfant">Nombre d'enfant </label>
                               <div className="col-sm-9">
-                                <input type="number" className="form-control" id="nbEnfant" name="nbEnfant" />
+                                <input id="nbEnfant" name="nbEnfant" type="number" className="form-control" />
                               </div>
                             </div>
                           </div>
-                        </div>
-
-                        <div className="row">
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" htmlFor="email">Email </label>
-                              <div className="col-sm-9">
-                                <input type="email" className="form-control" id="email" name="email" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-md-6">
-                            <div className="form-group row">
-                              <label className="col-sm-3 col-form-label" htmlFor="mdp">Mot de passe </label>
-                              <div className="col-sm-9">
-                                <input type="password" className="form-control" id="mdp" name="mdp" />
-                              </div>
-                            </div>
-                          </div>
-
                         </div>
                         <div className="modal-footer">
+
+
+
                           <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
                           <button type="submit" className="btn btn-primary">Ajouter</button>
                         </div>
-                      </form>
-                      {message && <div className="alert alert-success">{message}</div>}
-                      {error && <div className="alert alert-danger">{error}</div>}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-
-
-
+              </form>
+              {messageEmp && <div className="alert alert-success">{messageEmp}</div>}
+              {errorEmp && <div className="alert alert-danger">{errorEmp}</div>}
             </div>
 
           </div>
         </div>
       </div>
+
+
+
+      <div className="modal fade" id="exampleModalEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {selectedCycle && (
+          <EditWorkCycle theWorkCycle={selectedCycle} />
+        )}
+      </div>
+
 
       <Foot />
 
