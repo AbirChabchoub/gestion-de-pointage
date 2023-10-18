@@ -30,9 +30,17 @@ function PlanningAssignmentEmp() {
     const fetchData = async () => {
       try {
         const instance = axios.create({ baseURL: 'http://localhost:8080' });
-        const { data } = await instance.get('/api/employee/get-all-employees');
-        console.log(data);
+        const { response } = await instance.get('/api/employee/get-all-employees');
+        const data = await response.json();
         setEmployees(data);
+        if (data.length > 0) {
+          data.forEach(employee => {
+            console.log("Employee Code:", employee.codeEmp);
+            // Access other properties similarly, e.g., employee.name, employee.salary, etc.
+          });
+        } else {
+          console.log("No employees found.");
+        }
 
       } catch (error) {
         console.log(error);
@@ -103,16 +111,16 @@ function PlanningAssignmentEmp() {
     e.preventDefault(); // Prevent the default form submission
     // Get the form data from the input fields of departments
     const nomEmp = e.target?.nomEmp?.value;
-    const nomDept = e.target?.nomDept?.value;
-    const planning = e.target?.planning?.value;
-    const cycle = e.target?.cycle?.value;
+    // const nomDept = e.target?.nomDept?.value;
+    //const planning = e.target?.planning?.value;
+    //const cycle = e.target?.cycle?.value;
     const dateDeb = e.target?.dateDeb?.value;
     const dateFin = e.target?.dateFin?.value;
 
     try {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const response = await instance.post('/api/planning-employe/add', {
-        nomEmp, nomDept,planning, cycle, dateDeb, dateFin
+        nomEmp, dateDeb, dateFin
       });
       console.log(response.data);
       setMessage('Employé Assigné avec succès');
@@ -123,10 +131,10 @@ function PlanningAssignmentEmp() {
   };
 
   //select inputs
-  const [valueEmp, setValueEmp] = useState('');
+  const [valueEmp, setValueEmp] = useState('A');
   const [valueDept, setValueDept] = useState('Développement');
-  const [valuePlanning, setValuePlanning] = useState('');
-  const [valueCycle, setValueCycle] = useState('');
+  const [valuePlanning, setValuePlanning] = useState('Test');
+  const [valueCycle, setValueCycle] = useState('Test');
 
   const handleSelectEmploye = (e) => {
     const selectedValue = e.target.value;
@@ -145,19 +153,19 @@ function PlanningAssignmentEmp() {
     setValueCycle(selectedValue);
   };
 
- //delete item
- const handleDeleteEmpDept = async (e, idPlanEmp) => {
-  e.preventDefault();
+  //delete item
+  const handleDeleteEmpDept = async (e, idPlanEmp) => {
+    e.preventDefault();
 
-  try {
-    const instance = axios.create({ baseURL: 'http://localhost:8080' });
-    const { data } = await instance.delete(`/api/planning-employe/delete/${idPlanEmp}`);      // Handle the response data or any UI updates as needed
-    console.log(`Department with ID ${idPlanEmp} deleted successfully.`);
-  } catch (error) {
-    // Handle errors, e.g., display an error message
-    console.error(`Error deleting department: ${error.message}`);
-  }
-};
+    try {
+      const instance = axios.create({ baseURL: 'http://localhost:8080' });
+      const { data } = await instance.delete(`/api/planning-employe/delete/${idPlanEmp}`);      // Handle the response data or any UI updates as needed
+      console.log(`Department with ID ${idPlanEmp} deleted successfully.`);
+    } catch (error) {
+      // Handle errors, e.g., display an error message
+      console.error(`Error deleting department: ${error.message}`);
+    }
+  };
 
   return (
     <div>
@@ -218,12 +226,19 @@ function PlanningAssignmentEmp() {
                               <tbody>
                                 {employeesPlan.map((employeePlan, index) => {
                                   // Fetch the employee using the ID
-                                  // const employee = employeService.getEmployeById(employeePlan.codeEmp);
+                                  const correspondingEmployee = employees.find(employee => employee && employee.codeEmp === employeePlan.employee.codeEmp);
 
+                                
                                   return (
+
                                     <tr className="odd" key={employeePlan.idPlanEmp}>
-                                      <td>{employeePlan.debut}</td>
-                                      <td>{employeePlan.fin}</td>
+                                      <td>{correspondingEmployee ? correspondingEmployee.codeEmp : 'N/A'}</td>
+                                      <td>{valueEmp}</td>
+                                      <td>{valueDept}</td>
+                                      <td>{plannings.codePlaning}</td>
+                                      <td>{valuePlanning}</td>
+
+
                                       <td>
                                         <button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep"><i className="ti-pencil text-primary"></i></button>
                                         <button type="button" className="btn btn-inverse-info btn-icon" onClick={(e) => handleDeleteEmpDept(e, employeePlan?.idPlanEmp)}><i className="ti-trash text-primary"></i></button>
@@ -263,7 +278,7 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="nomEmp">Employé</label>
                       <div className="col-sm-9">
-                        <select className="form-control" id="nomEmp" name="nomEmp" value={valueEmp} onChange={handleSelectEmploye}>
+                        <select className="form-control" value={valueEmp} onChange={handleSelectEmploye}>
                           {employees.map((employee) => (
                             <option key={employee.codeEmp} value={employee.value} >
                               {employee.nomEmp}
@@ -277,7 +292,7 @@ function PlanningAssignmentEmp() {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label" htmlFor="departement">Département</label>
                       <div className="col-sm-9">
-                        <select className="form-control" id="departement" name="departement" value={valueDept} onChange={handleSelectDept}>
+                        <select className="form-control" value={valueDept} onChange={handleSelectDept}>
                           {departments.map((option) => (
                             <option key={option.idDept} value={option.value}>
                               {option.nomDept}

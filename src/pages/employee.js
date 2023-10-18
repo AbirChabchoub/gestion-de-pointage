@@ -3,10 +3,13 @@ import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
+import EditEmploye from './editEmployee';
 function Employee() {
 
   //fetch employees data
   const [employees, setEmployees] = useState([]);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -118,7 +121,12 @@ function Employee() {
     const selectedValue = e.target.value;
     setValueTitre(selectedValue);
   };
-
+//edit employee
+const handleEditEmploye = (employe) => {
+  //get id 
+  setSelectedEmployee(employe);
+  console.log("Props passed to the modal:", employe);
+};
   return (
     <div>
       <Nav />
@@ -131,7 +139,7 @@ function Employee() {
               <table>
                 <thead>
                   <tr>
-                    <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModal"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></th>
+                    <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" data-toggle="modal" data-target="#exampleModalEmploye"><i className="ti-plus btn-icon-prepend"></i> Ajouter</button></th>
                     <th> <button type="button" className="btn btn-outline-primary btn-icon-text marge" ><i className="ti-printer btn-icon-prepend"></i> Imprimer</button></th>
                     <th> <button type="button" className="btn btn-outline-info btn-icon-text marge">Synchroniser base pointeuse<i className="ti-reload btn-icon-append"></i> </button></th>
                     <th> <button type="button" className="btn btn-outline-info btn-icon-text marge"> Transféré employé vers pointeuse<i className="ti-upload btn-icon-append"></i></button> </th>
@@ -217,14 +225,11 @@ function Employee() {
 
                                       <td>{employee.nbEnfant}</td>
 
-                                      <td><button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
+                                      <td><button type="button" className="btn btn-inverse-info btn-icon"   data-toggle="modal" data-target="#exampleModalEditEmploye" onClick={() => handleEditEmploye(employee)}><i className="ti-pencil text-primary"></i></button>
                                         <button type="button" onClick={(e) => handleDeleteEmployees(e, employee?.codeEmp)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                       </td>
                                     </tr>
                                   })}
-
-
-
                               </tbody>
                             </table>
                           </div>
@@ -238,9 +243,6 @@ function Employee() {
           </div>
         </div>
       </div>
-
-
-
 
       <div className="modal fade" id="exampleModalEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
@@ -291,7 +293,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateInscrit">Date Inscription</label>
                               <div className="col-sm-9">
-                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" />
+                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" type="date" />
                               </div>
                             </div>
                           </div>
@@ -383,7 +385,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateNaissance">Date Naissance</label>
                               <div className="col-sm-9">
-                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" />
+                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" ></input>
                               </div>
                             </div>
                           </div>
@@ -394,7 +396,7 @@ function Employee() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateEmbauche">Date d'embauche</label>
                               <div className="col-sm-9">
-                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy" />
+                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy"  />
                               </div>
                             </div>
                           </div>
@@ -442,7 +444,6 @@ function Employee() {
                                     </option>))}
                                 </select>
                               </div>
-
                             </div>
 
                           </div>
@@ -465,7 +466,6 @@ function Employee() {
                               </div>
                             </div>
                           </div>
-
                           <div className="col-md-6">
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="ECH">Echellon </label>
@@ -474,11 +474,7 @@ function Employee() {
                               </div>
                             </div>
                           </div>
-
                         </div>
-
-
-
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group row">
@@ -521,9 +517,9 @@ function Employee() {
 
 
 
-      <div className="modal fade" id="exampleModalEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      {selectedCycle && (
-          <EditWorkCycle theWorkCycle={selectedCycle} />
+      <div className="modal fade" id="exampleModalEditEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {selectedEmployee && (
+          <EditEmploye theEmploye={selectedEmployee} />
         )}
       </div>
 

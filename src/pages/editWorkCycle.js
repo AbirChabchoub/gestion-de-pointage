@@ -67,41 +67,17 @@ const EditWorkCycle = ({ theWorkCycle }) => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group row">
-                    <label
-                      className="col-sm-3 col-form-label"
-                      htmlFor="codeCycle"
-                    >
-                      Code cycle
-                    </label>
+                    <label className="col-sm-3 col-form-label"  htmlFor="codeCycle">Code cycle</label>
                     <div className="col-sm-9">
-                      <input
-                        id="codeCycle"
-                        name="codeCycle"
-                        type="text"
-                        className="form-control"
-                        value={codeCycle}
-                        onChange={(e) => setCodeCycle(e.target.value)}
-                      />
+                      <input id="codeCycle" name="codeCycle" type="text" className="form-control"  value={codeCycle}  onChange={(e) => setCodeCycle(e.target.value)}/>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group row">
-                    <label
-                      className="col-sm-3 col-form-label"
-                      htmlFor="libelleCycle"
-                    >
-                      Libellé
-                    </label>
+                    <label className="col-sm-3 col-form-label" htmlFor="libelleCycle"> Libellé </label>
                     <div className="col-sm-9">
-                      <input
-                        id="libelleCycle"
-                        name="libelleCycle"
-                        type="text"
-                        className="form-control"
-                        value={libelleCycle}
-                        onChange={(e) => setLibelleCycle(e.target.value)}
-                      />
+                      <input id="libelleCycle" name="libelleCycle" type="text" className="form-control" value={libelleCycle} onChange={(e) => setLibelleCycle(e.target.value)} />
                     </div>
                   </div>
                 </div>
@@ -109,40 +85,20 @@ const EditWorkCycle = ({ theWorkCycle }) => {
               <div className="row">
                 <div className="col-md-6">
                   <div className="form-group row">
-                    <label
-                      className="col-sm-3 col-form-label"
-                      htmlFor="nbJourCycle"
-                    >
-                      Nombre de jours de cycle
-                    </label>
+                    <label className="col-sm-3 col-form-label" htmlFor="nbJourCycle"> Nombre de jours de cycle</label>
                     <div className="col-sm-9">
-                      <input
-                        id="nbJourCycle"
-                        name="nbJourCycle"
-                        type="number"
-                        className="form-control"
+                      <input id="nbJourCycle" name="nbJourCycle" type="number" className="form-control"
                         value={nbJourCycle}
                         onChange={(e) => setNbJourCycle(e.target.value)}
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Rest of your input fields */}
+                </div>             
               </div>
 
-              {/* Rest of your form */}
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Fermer
-                </button>
-                <button type="submit" className="btn btn-primary">
-                  Ajouter
-                </button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" > Fermer</button>
+                <button type="submit" className="btn btn-primary">Modifier</button>
               </div>
             </form>
             {message && <div className="alert alert-success">{message}</div>}

@@ -4,9 +4,11 @@ import Sidebar from "../components/Sidebar";
 import Foot from "../components/Foot";
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
+import EditDepartement from './editDepartement';
 function DepartementSettings() {
   // fetch departments data
   const [departments, setDepartments] = useState([]);
+  const [selectedDept, setSelectedDept] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -189,7 +191,12 @@ function DepartementSettings() {
     setValueTitre(selectedValue);
   };
 
-
+//edit dept
+const handleEditDept = (dept) => {
+  //get id 
+  setSelectedDept(dept);
+  console.log("Props passed to the modal:", dept);
+};
 
   return (
 
@@ -240,9 +247,8 @@ function DepartementSettings() {
 
                                       <td>{department.descriptionDept}</td>
 
-
-
-                                      <td><button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep"><i className="ti-pencil text-primary"></i></button>
+                                      <td>
+                                        <button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep" onClick={() => handleEditDept(department)}><i className="ti-pencil text-primary"></i></button>
                                         <button type="button" onClick={(e) => handleDelete(e, department?.idDept)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                       </td>
                                     </tr>
@@ -711,59 +717,9 @@ function DepartementSettings() {
 
 
       <div className="modal fade" id="exampleModalUpdateDep" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modifier un département</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <div >
-                <div >
-                  <div >
-                    <div >
-                      <div className="row">
-                        <div className="col-12 grid-margin">
-                          <div className="card">
-                            <div className="card-body">
-                              <form className="form-sample">
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label">Nom département</label>
-                                      <div className="col-sm-9">
-                                        <input type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="form-group row">
-                                      <label className="col-sm-3 col-form-label" required>Déscription département</label>
-                                      <div className="col-sm-9">
-                                        <input type="text" className="form-control" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" className="btn btn-primary">Modifier</button>
-            </div>
-          </div>
-        </div>
+      {selectedDept && (
+          <EditDepartement theDepartement={selectedDept} />
+        )}
       </div>
 
 

@@ -104,8 +104,7 @@ const handleSubmit = async (e) => {
                       type="button"
                       className="btn btn-outline-primary btn-icon-text marge"
                       data-toggle="modal"
-                      data-target="#exampleModal"
-                    >
+                      data-target="#exampleModal">
                       <i className="ti-plus btn-icon-prepend"></i> Ajouter
                     </button>
                   </td>
@@ -133,10 +132,7 @@ const handleSubmit = async (e) => {
                                   colSpan="1"
                                   aria-label="Product: activate to sort column descending"
                                   style={{ "width": "64px" }}
-                                  aria-sort="ascending"
-                                >
-                                  Libellé
-                                </th>
+                                  aria-sort="ascending">Libellé</th>
                                 <th
                                   className="sorting"
                                   tabIndex="0"
@@ -171,17 +167,11 @@ const handleSubmit = async (e) => {
                                     <button
                                       className="btn btn-inverse-info btn-icon"
                                       data-toggle="modal"
-                                      data-target="#exampleModalUpdateDep"
-                                      onClick={() => handleEditCycle(cycle)}
-                                    >
+                                      data-target="#exampleModalUpdateCycle"
+                                      onClick={() => handleEditCycle(cycle)}>
                                       <i className="ti-pencil text-primary"></i>
                                     </button>
-                                    <button
-                                      type="button"
-                                      onClick={(e) => handleDeleteCycles(e, cycle?.idCycle)}
-                                      className="btn btn-inverse-info btn-icon"
-                                    >
-                                      <i className="ti-trash text-primary"></i>
+                                    <button type="button" onClick={(e) => handleDeleteCycles(e, cycle?.idCycle)}  className="btn btn-inverse-info btn-icon"> <i className="ti-trash text-primary"></i>
                                     </button>
                                   </td>
                                 </tr>
@@ -321,7 +311,7 @@ const handleSubmit = async (e) => {
       </div>
 
       
-      <div className="modal fade" id="exampleModalUpdateDep" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModalUpdateCycle" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
      
         {selectedCycle && (
           <EditWorkCycle theWorkCycle={selectedCycle} />
