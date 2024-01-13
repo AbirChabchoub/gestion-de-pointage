@@ -16,16 +16,16 @@ function AttendanceLog() {
     // Get the form data from the input fields of departments
     //const numEmp = e.target.numEmp.value;
     //const nomEmp = e.target.nomEmp.value;
-    const employee = e.target?.employee?.value
-    const date = e.target?.date?.value;
-    const heure = e.target?.heure?.value;
+    const codeEmp = valueEmp;
+    const date = selectedDate;
+    const heure = selectedHour;
     const entreeSortie = e.target?.entreeSortie?.value;
     //const departement = e.target.departement.value;
 
     try {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const response = await instance.post('/api/journal-presence/add-journal', {
-        employee, date, heure, entreeSortie
+        codeEmp, date, heure, entreeSortie
       });
 
       console.log(response.data);
@@ -83,7 +83,7 @@ function AttendanceLog() {
         const { data } = await instance.get('/api/employee/get-all-employees');
         console.log(data);
         setEmployees(data);
-
+        console.log(employees)
 
       } catch (error) {
         console.log(error);
@@ -95,6 +95,7 @@ function AttendanceLog() {
 
   //display departments into select 
   const [valueDept, setValueDept] = useState('Développement');
+  const [valueType, setValueType] = useState('Entree');
   const [departments, setDepartments] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -117,24 +118,30 @@ function AttendanceLog() {
     setValueDept(selectedValue);
   };
 
+  const handleSelectType = (e) => {
+    const selectedValue = e.target.value;
+    console.log('Selected type:', selectedValue);
+    setValueType(selectedValue);
+  };
+
+
   //select inputs
   const handleSelectEmploye = (e) => {
     const selectedValue = e.target.value;
     setValueEmp(selectedValue);
   };
-  
-
-  const [valueEmployee, setValueEmployee] = useState('Utilisateur');
-  const [valueSexe, setValueSexe] = useState('Masculin');
-  const [valueTitre, setValueTitre] = useState('Responsable');
-
-  const handleSelectEmployee = (e) => {
-    const selectedValue = e.target.value;
-    console.log('Selected Privilege:', selectedValue);
-    setValueEmployee(selectedValue);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedHour, setSelectedHour] = useState('');
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
   };
-
-
+  const handleHourChange = (event) => {
+    setSelectedHour(event.target.value);
+  };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString(); // Adjust the format as per your requirement
+  };
   return (
     <div>
 
@@ -229,15 +236,14 @@ function AttendanceLog() {
                               <tbody>
                                 {journals.map((journal, index) => (
                                   <tr className="odd" key={index}>
-                                    <td>{journal.numEmp}</td>
-                                    <td>{valueEmployee}</td>
-                                    <td>{journal.numEmp}</td>
-                                    
+                                    <td>{journal.codeEmp}</td>
+                                    <td>{journal.nomEmp}</td>
+                                    <td>{journal.nomEmp}</td>
+                                    <td>{journal.date ? formatDate(journal.date) : ''}</td>
+                                    <td>{journal.heure ? `${String(journal.heure).slice(0, 2)}:${String(journal.heure).slice(2)}` : ''}</td>
+                                    <td>{journal.entreeSortie}</td>
                                     <td>
-                                      <button className="btn btn-inverse-info btn-icon"
-                                        data-toggle="modal"
-                                        data-target="#exampleModalUpdatejournal"
-                                        onClick={() => handleEditJournal(journal)}>
+                                      <button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdatejournal" onClick={() => handleEditJournal(journal)}>
                                         <i className="ti-pencil text-primary"></i>
                                       </button>
                                       <button type="button" onClick={(e) => handleDeleteJournal(e, journal?.idJournalPresence)} className="btn btn-inverse-info btn-icon">
@@ -291,18 +297,14 @@ function AttendanceLog() {
                                 </div>
                               </div>
                             </div>
-                            <div className="col-md-6">
-                              <div className="form-group row">
-                                <button type="button" className="btn btn-inverse-info btn-icon"><i className="ti-pencil text-primary"></i></button>
-                              </div>
-                            </div>
+                            
                           </div>
                           <div className="row">
                             <div className="col-md-6">
                               <div className="form-group row">
                                 <label className="col-sm-3 col-form-label" htmlFor='date'>Date début</label>
                                 <div className="col-sm-9">
-                                  <input className="form-control" placeholder="dd/mm/yyyy" type="date" name="date" id="date" value={valueEmployee} onChange={handleSelectEmploye}/>
+                                  <input className="form-control" placeholder="dd/mm/yyyy" type="date" name="date" id="date" value={selectedDate} onChange={handleDateChange} />
                                 </div>
                               </div>
                             </div>
@@ -310,28 +312,23 @@ function AttendanceLog() {
                               <div className="form-group row">
                                 <label className="col-sm-3 col-form-label" htmlFor='heure'>Heure</label>
                                 <div className="col-sm-9">
-                                  <input className="form-control" placeholder="hh/mm" type="time" />
+                                  <input className="form-control" placeholder="hh/mm" type="time" value={selectedHour} onChange={handleHourChange} />
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="row">
-                            <div className="col-md-6">
-                              <div >
-                                <div className="form-check form-check-flat form-check-primary">
-                                  <label className="form-check-label">
-                                    <input type="checkbox" className="form-check-input" value="Entree"  /> Entrée </label>
-                                </div>
+                          <div className='row'>
+                          <div className="col-md-6">
+                            <div className="form-group row">
+                              <label className="col-sm-3 col-form-label" htmlFor="type">Type</label>
+                              <div className="col-sm-9">
+                              <select className="form-control" name="type" id="type" value={valueType} onChange={handleSelectType}>
+                                  <option value="entree">Entree</option>
+                                  <option value="sortie">Sortie</option>
+                                </select>
                               </div>
                             </div>
-                            <div className="col-md-6">
-                              <div >
-                                <div className="form-check form-check-flat form-check-primary">
-                                  <label className="form-check-label">
-                                    <input type="checkbox" className="form-check-input" value="Sortie" /> Sortie </label>
-                                </div>
-                              </div>
-                            </div>
+                          </div>
                           </div>
                           <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -393,7 +390,7 @@ function AttendanceLog() {
                               <div className="form-group row">
                                 <label className="col-sm-3 col-form-label">Date début</label>
                                 <div className="col-sm-9">
-                                  <input className="form-control" placeholder="dd/mm/yyyy" />
+                                  <input className="form-control" placeholder="dd/mm/yyyy" type="date" />
                                 </div>
                               </div>
                             </div>

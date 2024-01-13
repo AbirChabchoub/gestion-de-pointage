@@ -3,10 +3,12 @@ import axios from 'axios';
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
+import EditLeave from "../pages/editLeave"
 function LeaveRegistration() {
 
   //fetch employees data
   const [leaves, setLeaves] = useState([]);
+  const [selectedLeave, setSelectedLeave] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -24,23 +26,23 @@ function LeaveRegistration() {
   }, []);
 
   //delete cycles 
-  const handleDeleteCycles = async (e, codeCycle) => {
+  const handleDeleteLeave = async (e, idConge) => {
     e.preventDefault();
 
     try {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
-      const { data } = await instance.delete(`/api/cycle-travail/delete/${codeCycle}`);      // Handle the response data or any UI updates as needed
-      console.log(`Department with ID ${codeCycle} deleted successfully.`);
+      const { data } = await instance.delete(`/api/conge/delete/${idConge}`);      // Handle the response data or any UI updates as needed
+      console.log(`Department with ID ${idConge} deleted successfully.`);
     } catch (error) {
       // Handle errors, e.g., display an error message
       console.error(`Error deleting department: ${error.message}`);
     }
   };
 
-  //add new work-cycle
+  //add new leave
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const handleSubmit = async (e) => {
+  const handleSubmitLeave = async (e) => {
     e.preventDefault(); // Prevent the default form submission
 
     // Get the form data from the input fields of departments
@@ -65,8 +67,7 @@ function LeaveRegistration() {
     }
   };
 
-  //display cycles into select 
-
+  //display employees into select 
   const [options, setOptions] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -83,6 +84,45 @@ function LeaveRegistration() {
 
     fetchData();
   }, []);
+
+//edit leave
+const handleEditLeave = (leave) => {
+  //get id 
+  setSelectedLeave(leave);
+  console.log("Props passed to the modal:", leave);
+};
+
+  const [selectedDateEcriture, setSelectedDateEcriture] = useState('');
+  const [selectedDateConge, setSelectedDateConge] = useState('');
+  const handleDateEcritureChange = (event) => {
+    setSelectedDateEcriture(event.target.value);
+  };
+  const handleSelectedDateConge = (event) => {
+    setSelectedDateConge(event.target.value);
+  };
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString(); // Adjust the format as per your requirement
+  };
+
+   //display cycles into select 
+   const [motif, setMotif] = useState([]);
+   useEffect(() => {
+     const fetchData = async () => {
+       try {
+         const instance = axios.create({ baseURL: 'http://localhost:8080' });
+         const { data } = await instance.get('/api/motif/get-all-motif');
+         console.log(data);
+         setOptions(data);
+ 
+       } catch (error) {
+         console.log(error);
+       }
+     };
+ 
+     fetchData();
+   }, []);
 
   return (
     <div>
@@ -123,7 +163,6 @@ function LeaveRegistration() {
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Date congé</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Motif</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Raison</th>
-
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Observation</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "58px" }}>Action</th>
 
@@ -136,18 +175,15 @@ function LeaveRegistration() {
                                     return <tr className="odd" key={index}>
 
 
-                                      <td>{leave.dateEcriture}</td>
-
-                                      <td>{leave.dateConge}</td>
+                                      <td>{leave.dateEcriture ? formatDate(leave.dateEcriture) : ''}</td>
+                                      <td>{leave.dateConge? formatDate(leave.dateConge) : ''}</td>
                                       <td>{leave.motif}</td>
                                       <td>{leave.raison}</td>
                                       <td>{leave.observation}</td>
 
 
-
-
-                                      <td><button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdateDep"><i className="ti-pencil text-primary"></i></button>
-                                        <button type="button" onClick={(e) => handleDeleteCycles(e, leave?.idConge)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
+                                      <td><button className="btn btn-inverse-info btn-icon"  data-toggle="modal" data-target="#exampleModalUpdatejournal" onClick={() => handleEditLeave(leave)}><i className="ti-pencil text-primary"></i></button>
+                                        <button type="button" onClick={(e) => handleDeleteLeave(e, leave?.idConge)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                       </td>
                                     </tr>
                                   })}
@@ -161,7 +197,6 @@ function LeaveRegistration() {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -182,8 +217,7 @@ function LeaveRegistration() {
                 <div className="col-12 grid-margin">
                   <div className="card">
                     <div className="card-body">
-                      <form className="form-sample">
-
+                      <form className="form-sample" onSubmit={handleSubmitLeave}>
                         <div className="row">
                           <div className="col-md-6">
                             <div className="form-group row">
@@ -191,7 +225,7 @@ function LeaveRegistration() {
                               <div className="col-sm-9">
                                 <select className="form-control">
                                   {options.map((option) => (
-                                    <option key={option.value} value={option.value}>
+                                    <option key={option.codeEmp} value={option.value}>
                                       {option.nomEmp}
                                     </option>
                                   ))}
@@ -203,11 +237,12 @@ function LeaveRegistration() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label">Motif</label>
                               <div className="col-sm-9">
-                                <select className="form-control">
-                                  <option>Maladie</option>
-                                  <option>Accident de travail</option>
-                                  <option>Congé de travail</option>
-                                  <option>Jour férié chomé non payé</option>
+                                <select className="form-control" >
+                                {options.map((option) => (
+                                    <option key={option.idMotif} value={option.value}>
+                                      {option.libelleMotif}
+                                    </option>
+                                  ))}
                                 </select>
                               </div>
                             </div>
@@ -216,7 +251,7 @@ function LeaveRegistration() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label">Date début</label>
                               <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" />
+                                <input className="form-control" placeholder="dd/mm/yyyy" type="date" name="dateDeb" id="dateDeb" value={selectedDateEcriture} onChange={handleDateEcritureChange} />
                               </div>
                             </div>
                           </div>
@@ -225,7 +260,7 @@ function LeaveRegistration() {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label">Date fin</label>
                               <div className="col-sm-9">
-                                <input className="form-control" placeholder="dd/mm/yyyy" />
+                                <input className="form-control" placeholder="dd/mm/yyyy" type="date" name="dateFin" id="dateFin" value={selectedDateConge} onChange={handleSelectedDateConge}/>
                               </div>
                             </div>
                           </div>
@@ -246,23 +281,29 @@ function LeaveRegistration() {
                               </div>
                             </div>
                           </div>
-
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                          <button type="button" className="btn btn-primary">Ajouter</button>
                         </div>
                       </form>
+                      {message && <div className="alert alert-success">{message}</div>}
+                      {error && <div className="alert alert-danger">{error}</div>}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" className="btn btn-primary">Ajouter</button>
-            </div>
+
           </div>
         </div>
       </div>
 
-
+      <div className="modal fade" id="exampleModalEditEmploye" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      {selectedLeave && (
+          <EditLeave theLeave={selectedLeave} />
+        )}
+      </div>
 
 
 

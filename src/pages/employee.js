@@ -44,30 +44,38 @@ function Employee() {
    const [errorEmp, setErrorEmp] = useState("");
    const handleSubmitEmployee = async (e) => {
      e.preventDefault(); // Prevent the default form submission
+     console.log(e.target);
+
      // Get the form data from the input fields
-     const nomEmp = e.target.nomEmp.value;
-     const prenomEmp = e.target.prenomEmp.value;
-     const sexeEmp = e.target.sexeEmp.value;
-     const dateInscrit = e.target.dateInscrit.value;
-     const numIdEmp = e.target.numIdEmp.value;
-     const numEmp = e.target.numEmp.value;
-     const numCarte = e.target.numCarte.value;
-     const nationalite = e.target.nationalite.value;
-     const numTelEmp = e.target.numTelEmp.value;
-     // const privilege = e.target.privilege.value;
-     const remarqueEmp = e.target.remarqueEmp.value;
-     const CIN = e.target.CIN.value;
-     const numCNSS = e.target.numCNSS.value;
-     const ECH = e.target.ECH.value;
-     const CAT = e.target.CAT.value;
-     const nbEnfant = e.target.nbEnfant.value;
-    const adresseEmp = e.target.adresseEmp.value;
+     const nomEmp = e.target.nomEmp.value
+     const prenomEmp = e.target.prenomEmp.value
+     const sexeEmp = e.target.sexeEmp.value
+     const dateInscrit = selectedDateInscrit
+     const dateNaissance = selectedDateNaissance
+     const dateEmbauche = selectedDateEmbauche
+     const numIdEmp = e.target.numIdEmp.value
+     const numEmp = e.target.numEmp.value
+     const numCarte = e.target.numCarte.value
+     const nationalite = e.target.nationalite.value
+     const numTelEmp = e.target.numTelEmp.value
+     const privilege =valuePrivilege
+     const remarqueEmp = e.target.remarqueEmp.value
+     const CIN = e.target.CIN.value
+     const numCNSS = e.target.numCNSS.value
+     const ECH = e.target.ECH.value
+     const CAT = e.target.CAT.value
+     const nbEnfant = e.target.nbEnfant.value
+     const adresseEmp = e.target.adresseEmp.value
+     const departement = valueDept
+     const titre = valueTitre
+    console.log(departement);
+
  
      try {
        const instance = axios.create({ baseURL: 'http://localhost:8080' });
        const response = await instance.post('/api/employee/add-employee', {
          nomEmp, prenomEmp, dateInscrit, numIdEmp, numEmp, numCarte, nationalite, numTelEmp, 
-         sexeEmp, remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant,adresseEmp
+         sexeEmp, remarqueEmp, CIN, numCNSS, ECH, CAT, nbEnfant,adresseEmp,departement,privilege,titre,dateEmbauche,dateNaissance
        });
  
        console.log(response.data);
@@ -101,6 +109,9 @@ function Employee() {
   const [valueDept, setValueDept] = useState('Développement');
   const [valueSexe, setValueSexe] = useState('Masculin');
   const [valueTitre, setValueTitre] = useState('Responsable');
+  const [selectedDateInscrit, setSelectedDateInscrit] = useState('');
+  const [selectedDateNaissance, setSelectedDateNaissance] = useState('');
+  const [selectedDateEmbauche, setSelectedDateEmbauche] = useState('');
 
   const handleSelectPrivilege = (e) => {
     const selectedValue = e.target.value;
@@ -122,11 +133,26 @@ function Employee() {
     setValueTitre(selectedValue);
   };
 //edit employee
-const handleEditEmploye = (employe) => {
+  const handleEditEmploye = (employe) => {
   //get id 
   setSelectedEmployee(employe);
   console.log("Props passed to the modal:", employe);
 };
+
+  const handleDateChangeInscrit = (event) => {
+    setSelectedDateInscrit(event.target.value);
+  };
+  const handleDateChangeNaissance = (event) => {
+    setSelectedDateNaissance(event.target.value);
+  };
+  const handleDateChangeEmbauche = (event) => {
+    setSelectedDateEmbauche(event.target.value);
+  };
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString(); // Adjust the format as per your requirement
+  };
+
   return (
     <div>
       <Nav />
@@ -158,8 +184,8 @@ const handleEditEmploye = (employe) => {
                             <table id="example" className="display expandable-table" style={{ "width": "100%" }}>
                               <thead>
                                 <tr role="row">
-                                  <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{ "width": "70px" }}>Code</th>
-                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Nom et prénom</th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Nom </th>
+                                  <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Prénom</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Business type: activate to sort column ascending" style={{ "width": "51px" }}>Sexe</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Policy holder: activate to sort column ascending" style={{ "width": "43px" }}>Date inscription</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Premium: activate to sort column ascending" style={{ "width": "49px" }}>Num ID Employé</th>
@@ -174,7 +200,6 @@ const handleEditEmploye = (employe) => {
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Salaire</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Adresse</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Remarque</th>
-                                  <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Photo</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Département</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>CIN</th>
                                   <th className="sorting" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Updated at: activate to sort column ascending" style={{ "width": "64px" }}>Num CNSS</th>
@@ -189,42 +214,28 @@ const handleEditEmploye = (employe) => {
                                 {
                                   employees.map((employee, index) => {
                                     return <tr className="odd" key={index}>
-
-
-                                      <td className=" select-checkbox">{employee.codeEmp}</td>
-
-                                      <td className="sorting_1">{employee.nomEmp}</td>
+                                      <td>{employee.nomEmp}</td>
                                       <td>{employee.prenomEmp}</td>
-
                                       <td>{employee.sexeEmp}</td>
-                                      <td>{employee.dateInscrit}</td>
-
+                                      <td>{employee.dateInscrit ? formatDate(employee.dateInscrit) : ''}</td>
                                       <td>{employee.numIdEmp}</td>
                                       <td>{employee.numEmp}</td>
-
                                       <td>{employee.numCarte}</td>
                                       <td>{employee.nationalite}</td>
                                       <td>{employee.numTelEmp}</td>
-                                      <td>{valueTitre}</td>
-                                      <td>{valuePrivilege}</td>
-                                      <td>{employee.dateNaissance}</td>
-
-                                      <td>{employee.dateEmbauche}</td>
+                                      <td>{employee.titre}</td>                       
+                                      <td>{employee.privilege}</td>
+                                      <td>{employee.dateNaissance ? formatDate(employee.dateNaissance) : ''}</td>
+                                      <td>{employee.dateEmbauche ? formatDate(employee.dateEmbauche) : ''}</td>
                                       <td>{employee.salaireEmp}</td>
-
                                       <td>{employee.adresseEmp}</td>
-
                                       <td>{employee.remarqueEmp}</td>
-                                      <td>{valueDept}</td>
-
+                                      <td>{employee.departement.nomDept}</td>
                                       <td>{employee.CIN}</td>
                                       <td>{employee.numCNSS}</td>
-
                                       <td>{employee.ECH}</td>
                                       <td>{employee.CAT}</td>
-
                                       <td>{employee.nbEnfant}</td>
-
                                       <td><button type="button" className="btn btn-inverse-info btn-icon"   data-toggle="modal" data-target="#exampleModalEditEmploye" onClick={() => handleEditEmploye(employee)}><i className="ti-pencil text-primary"></i></button>
                                         <button type="button" onClick={(e) => handleDeleteEmployees(e, employee?.codeEmp)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                       </td>
@@ -293,7 +304,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateInscrit">Date Inscription</label>
                               <div className="col-sm-9">
-                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" type="date" />
+                                <input id="dateInscrit" name="dateInscrit" className="form-control" placeholder="dd/mm/yyyy" type="date" value={selectedDateInscrit} onChange={handleDateChangeInscrit} />
                               </div>
                             </div>
                           </div>
@@ -303,7 +314,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numIdEmp">N ID</label>
                               <div className="col-sm-9">
-                                <input id="numIdEmp" name="numIdEmp" type="number" className="form-control" />
+                                <input id="numIdEmp" name="numIdEmp" type="number" className="form-control" min={0}/>
                               </div>
                             </div>
                           </div>
@@ -312,7 +323,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numEmp">N Employé</label>
                               <div className="col-sm-9">
-                                <input id="numEmp" name="numEmp" type="number" className="form-control" />
+                                <input id="numEmp" name="numEmp" type="number" className="form-control" min={0}/>
                               </div>
                             </div>
                           </div>
@@ -324,7 +335,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="numCarte">N Carte</label>
                               <div className="col-sm-9">
-                                <input id="numCarte" name="numCarte" type="number" className="form-control" />
+                                <input id="numCarte" name="numCarte" type="number" className="form-control" min={0} />
                               </div>
                             </div>
                           </div>
@@ -385,7 +396,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateNaissance">Date Naissance</label>
                               <div className="col-sm-9">
-                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy" ></input>
+                                <input id="dateNaissance" name="dateNaissance" className="form-control" placeholder="dd/mm/yyyy"  type="date" value={selectedDateNaissance} onChange={handleDateChangeNaissance}></input>
                               </div>
                             </div>
                           </div>
@@ -396,7 +407,7 @@ const handleEditEmploye = (employe) => {
                             <div className="form-group row">
                               <label className="col-sm-3 col-form-label" htmlFor="dateEmbauche">Date d'embauche</label>
                               <div className="col-sm-9">
-                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy"  />
+                                <input id="dateEmbauche" name="dateEmbauche" className="form-control" placeholder="dd/mm/yyyy" type="date" value={selectedDateEmbauche} onChange={handleDateChangeEmbauche}/>
                               </div>
                             </div>
                           </div>
@@ -439,13 +450,12 @@ const handleEditEmploye = (employe) => {
                               <div className="col-sm-9">
                                 <select className="form-control" value={valueDept} onChange={handleSelectDept}>
                                   {options.map((option) => (
-                                    <option key={option.idDept} value={option.value}>
+                                    <option key={option.idDept} value={option.nomDept}>
                                       {option.nomDept}
                                     </option>))}
                                 </select>
                               </div>
                             </div>
-
                           </div>
                           <div className="col-md-6">
                             <div className="form-group row">
@@ -495,9 +505,6 @@ const handleEditEmploye = (employe) => {
                           </div>
                         </div>
                         <div className="modal-footer">
-
-
-
                           <button type="button" className="btn btn-secondary" data-dismiss="modal">Fermer</button>
                           <button type="submit" className="btn btn-primary">Ajouter</button>
                         </div>

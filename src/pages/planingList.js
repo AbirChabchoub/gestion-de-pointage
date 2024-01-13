@@ -25,20 +25,18 @@ function PlanningList() {
     }, []);
 
 
-    const handleDelete = async (e, codePlaning) => {
+    const handleDelete = async (e, idPlanning) => {
         e.preventDefault();
 
         try {
             const instance = axios.create({ baseURL: 'http://localhost:8080' });
-            const { data } = await instance.delete(`/api/planning/delete/${codePlaning}`);      // Handle the response data or any UI updates as needed
-            console.log(`Planning with ID ${codePlaning} deleted successfully.`);
+            const { data } = await instance.delete(`/api/planning/delete/${idPlanning}`);      // Handle the response data or any UI updates as needed
+            console.log(`Planning with ID ${idPlanning} deleted successfully.`);
         } catch (error) {
             // Handle errors, e.g., display an error message
             console.error(`Error deleting department: ${error.message}`);
         }
     };
-
-
 
     //add new planning
     const [message, setMessage] = useState("");
@@ -47,43 +45,43 @@ function PlanningList() {
         e.preventDefault(); // Prevent the default form submission
 
         // Get the form data from the input fields of departments
-        const libellePlanning = e.target.libellePlanning.value;
-        const cachePlanning = e.target.cachePlanning.value;
+        const codePlanning= e.target?.codePlaning?.value
+        const libellePlanning = e.target?.libellePlanning?.value;
+        const cachePlanning = e.target?.cachePlanning?.value;
 
 
         try {
             const instance = axios.create({ baseURL: 'http://localhost:8080' });
             const response = await instance.post('/api/planning/add-planning', {
-                libellePlanning, cachePlanning
+                libellePlanning, codePlanning,cachePlanning
             });
 
             console.log(response.data);
-            setMessage('Plannig créé avec succès');
+            setMessage('Planning créé avec succès');
         } catch (err) {
             console.error(err);
-            setError('Le cycle existe déjà');
+            setError('Le planning existe déjà');
         }
     };
 
 
     //display cycles into select 
+    const [options, setOptions] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const instance = axios.create({ baseURL: 'http://localhost:8080' });
+                const { data } = await instance.get('/api/cycle-travail/get-all-cycles');
+                console.log(data);
+                setOptions(data);
 
-const [options, setOptions] = useState([]);
-useEffect(() => {
-    const fetchData = async () => {
-        try {
-            const instance = axios.create({ baseURL: 'http://localhost:8080' });
-            const { data } = await instance.get('/api/cycle-travail/get-all-cycles');
-            console.log(data);
-            setOptions(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    fetchData();
-}, []);
+        fetchData();
+    }, []);
 
 
 
@@ -128,8 +126,8 @@ useEffect(() => {
                                                             <tbody>
 
                                                                 {
-                                                                    plannings.map((planning, index) => {
-                                                                        return <tr className="odd" key={index}>
+                                                                    plannings.map((planning,index) => (
+                                                                         <tr className="odd" key={index}>
 
                                                                             <td>{planning.codePlaning}</td>
 
@@ -137,13 +135,17 @@ useEffect(() => {
 
                                                                             <td>{planning.cachePlanning}</td>
 
-
+                                                                           
 
                                                                             <td><button className="btn btn-inverse-info btn-icon" data-toggle="modal" data-target="#exampleModalUpdatePlanning"><i className="ti-pencil text-primary"></i></button>
-                                                                                <button type="button" onClick={(e) => handleDelete(e, planning?.codePlaning)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
+                                                                                <button type="button" onClick={(e) => handleDelete(e, planning?.idPlanning)} className="btn btn-inverse-info btn-icon"><i className="ti-trash text-primary"></i></button>
                                                                             </td>
                                                                         </tr>
-                                                                    })}
+
+
+
+                                                                    ))}
+
 
 
                                                             </tbody>
@@ -153,16 +155,10 @@ useEffect(() => {
                                             </div>
                                         </div>
                                     </div>
-
-
-                                </div>
+                              </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
 

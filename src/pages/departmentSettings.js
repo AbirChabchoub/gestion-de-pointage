@@ -44,6 +44,8 @@ function DepartementSettings() {
   }, []);
 
   //delete department
+  const [messageDept, setMessageDept] = useState("");
+  const [errorDept, setErrorDept] = useState("");
   const handleDelete = async (e, departmentId) => {
     e.preventDefault();
 
@@ -51,9 +53,11 @@ function DepartementSettings() {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const { data } = await instance.delete(`/api/departement/delete/${departmentId}`);      // Handle the response data or any UI updates as needed
       console.log(`Department with ID ${departmentId} deleted successfully.`);
+      setMessageDept('Département est supprimé avec succès');
     } catch (error) {
       // Handle errors, e.g., display an error message
       console.error(`Error deleting department: ${error.message}`);
+      setErrorDept('Erreur suppression département');
     }
   };
 
@@ -71,6 +75,8 @@ function DepartementSettings() {
   };
 
   //delete employees 
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const handleDeleteEmployees = async (e, codeEmp) => {
     e.preventDefault();
 
@@ -78,14 +84,17 @@ function DepartementSettings() {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const { data } = await instance.delete(`/api/employee/delete/${codeEmp}`);      // Handle the response data or any UI updates as needed
       console.log(`Department with ID ${codeEmp} deleted successfully.`);
+      setMessage('Département est supprimé avec succès');
     } catch (error) {
       // Handle errors, e.g., display an error message
       console.error(`Error deleting department: ${error.message}`);
+      setError('Erreur suppression département');
     }
   };
+
+ 
   // add new department
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission
 
@@ -229,6 +238,9 @@ const handleEditDept = (dept) => {
                           <div className="table-responsive">
                             <table id="example" className="display expandable-table" style={{ 'width': '100%' }}>
                               <thead>
+                              {messageDept && <div className="alert alert-success">{messageDept}</div>}
+                              {errorDept && <div className="alert alert-danger">{errorDept}</div>}
+
                                 <tr role="row">
                                   <th className="select-checkbox sorting_disabled" rowSpan="1" colSpan="1" aria-label="Quote#" style={{ "width": "170px" }}>Nom</th>
                                   <th className="sorting_asc" tabIndex="0" aria-controls="example" rowSpan="1" colSpan="1" aria-label="Product: activate to sort column descending" style={{ "width": "51px" }} aria-sort="ascending">Description</th>

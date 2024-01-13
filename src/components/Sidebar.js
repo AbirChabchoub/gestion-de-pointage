@@ -15,6 +15,19 @@ function Sidebar() {
             </li>
             <li className="nav-item">
               <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i className="icon-grid menu-icon"></i>
+                <span className="menu-title">Paramétre global</span>
+                <i className="menu-arrow"></i>
+              </a>
+              <div className="collapse" id="ui-basic">
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item"> <Link className="nav-link" to="/downloadPT">Motif d'abscence</Link></li>
+                  <li className="nav-item"> <Link className="nav-link" to="/terminalManagement">Motif de maladie</Link></li>
+                </ul>
+              </div>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <i className="ti-desktop menu-icon"></i>
                 <span className="menu-title">Machine</span>
                 <i className="menu-arrow"></i>

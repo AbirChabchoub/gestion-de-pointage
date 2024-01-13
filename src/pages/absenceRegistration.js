@@ -2,13 +2,38 @@ import EmployeesTable from "../components/EmployeesTable";
 import Foot from "../components/Foot";
 import Sidebar from "../components/Sidebar";
 import Nav from "../components/Nav";
-import { Link } from "react-router-dom";
+import axios from "axios";
 function AbsenceRegistration() {
+ 
+ 
+ // add new employee
+ 
+ const handleSubmitAbsence = async (e) => {
+   e.preventDefault(); // Prevent the default form submission
+   console.log(e.target);
+
+   // Get the form data from the input fields
+   const nomEmp = e.target.nomEmp.value
+   const prenomEmp = e.target.prenomEmp.value
+   const sexeEmp = e.target.sexeEmp.value
+  // const dateInscrit = selectedDateInscrit
+   
+  //console.log(departement);
+
+
+   
+     const instance = axios.create({ baseURL: 'http://localhost:8080' });
+     const response = await instance.post('/api/employee/add-employee', {
+     
+     });
+
+    
+ };
+
   return (
     <div>
 
       <Nav/>
-
       <Sidebar/>
 
       <div>
@@ -25,7 +50,7 @@ function AbsenceRegistration() {
               </thead>
               </table>
                           
-                          <br/>
+              <br/>
 
               <div className="row" >
                 <div className="col-md-12 grid-margin stretch-card">
@@ -86,8 +111,7 @@ function AbsenceRegistration() {
            <div className="col-12 grid-margin">
               <div className="card">
                 <div className="card-body">
-                  <form className="form-sample">
-                   
+                  <form className="form-sample">                   
                     <div className="row">
                     <div className="col-md-6">
                         <div className="form-group row">

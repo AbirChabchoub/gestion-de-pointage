@@ -7,7 +7,7 @@ import Nav from "../components/Nav";
 function PlanningAssignmentEmp() {
 
   //display cycles into select 
-  const [Cycles, setCycles] = useState([]);
+  const [cycles, setCycles] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,17 +30,9 @@ function PlanningAssignmentEmp() {
     const fetchData = async () => {
       try {
         const instance = axios.create({ baseURL: 'http://localhost:8080' });
-        const { response } = await instance.get('/api/employee/get-all-employees');
-        const data = await response.json();
-        setEmployees(data);
-        if (data.length > 0) {
-          data.forEach(employee => {
-            console.log("Employee Code:", employee.codeEmp);
-            // Access other properties similarly, e.g., employee.name, employee.salary, etc.
-          });
-        } else {
-          console.log("No employees found.");
-        }
+        const { data } = await instance.get('/api/employee/get-all-employees');
+        console.log(data)
+        setEmployees(data);      
 
       } catch (error) {
         console.log(error);
@@ -68,7 +60,7 @@ function PlanningAssignmentEmp() {
     fetchData();
   }, []);
 
-  //display cycles into select 
+  //display planning into select 
   const [plannings, setPlannings] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -110,18 +102,19 @@ function PlanningAssignmentEmp() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission
     // Get the form data from the input fields of departments
-    const nomEmp = e.target?.nomEmp?.value;
-    // const nomDept = e.target?.nomDept?.value;
-    //const planning = e.target?.planning?.value;
-    //const cycle = e.target?.cycle?.value;
+    const employee = valueEmp;
+    const departement = valueDept;
+    const planning = valuePlanning;
+    const cycle = valueCycle;
     const dateDeb = e.target?.dateDeb?.value;
     const dateFin = e.target?.dateFin?.value;
-
     try {
       const instance = axios.create({ baseURL: 'http://localhost:8080' });
       const response = await instance.post('/api/planning-employe/add', {
-        nomEmp, dateDeb, dateFin
+        employee, planning,departement, cycle,dateDeb,dateFin
+        
       });
+      console.log(employee)
       console.log(response.data);
       setMessage('Employé Assigné avec succès');
     } catch (err) {
@@ -131,14 +124,15 @@ function PlanningAssignmentEmp() {
   };
 
   //select inputs
-  const [valueEmp, setValueEmp] = useState('A');
-  const [valueDept, setValueDept] = useState('Développement');
-  const [valuePlanning, setValuePlanning] = useState('Test');
-  const [valueCycle, setValueCycle] = useState('Test');
+  const [valueEmp, setValueEmp] = useState('');
+  const [valueDept, setValueDept] = useState('');
+  const [valuePlanning, setValuePlanning] = useState('');
+  const [valueCycle, setValueCycle] = useState('');
 
   const handleSelectEmploye = (e) => {
     const selectedValue = e.target.value;
     setValueEmp(selectedValue);
+    console.log("hhhhh",valueEmp)
   };
   const handleSelectDept = (e) => {
     const selectedValue = e.target.value;
@@ -225,18 +219,15 @@ function PlanningAssignmentEmp() {
                               </thead>
                               <tbody>
                                 {employeesPlan.map((employeePlan, index) => {
-                                  // Fetch the employee using the ID
-                                  const correspondingEmployee = employees.find(employee => employee && employee.codeEmp === employeePlan.employee.codeEmp);
+                                 
 
                                 
                                   return (
 
-                                    <tr className="odd" key={employeePlan.idPlanEmp}>
-                                      <td>{correspondingEmployee ? correspondingEmployee.codeEmp : 'N/A'}</td>
-                                      <td>{valueEmp}</td>
-                                      <td>{valueDept}</td>
-                                      <td>{plannings.codePlaning}</td>
-                                      <td>{valuePlanning}</td>
+                                    <tr className="odd" key={index}>
+                                    
+                                     <td>{employeePlan.dateDeb}</td>
+                                     <td>{employeePlan.dateFin}</td>
 
 
                                       <td>
@@ -305,9 +296,9 @@ function PlanningAssignmentEmp() {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group row">
-                      <label className="col-sm-3 col-form-label" htmlFor="planning">Planning</label>
+                      <label className="col-sm-3 col-form-label" htmlFor="libellePlanning">Planning</label>
                       <div className="col-sm-9">
-                        <select className="form-control" id="planning" name="planning" value={valuePlanning} onChange={handleSelectPlanning}>
+                        <select className="form-control" id="libellePlanning" name="libellePlanning" value={valuePlanning} onChange={handleSelectPlanning}>
                           {plannings.map((planning) => (
                             <option key={planning.idPlanning} value={planning.value}>
                               {planning.libellePlanning}
@@ -323,9 +314,9 @@ function PlanningAssignmentEmp() {
                       <label className="col-sm-3 col-form-label" htmlFor="libelleCycle" >Cycle</label>
                       <div className="col-sm-9">
                         <select className="form-control" id="libelleCycle" name="libelleCycle" value={valueCycle} onChange={handleSelectCycle}>
-                          {Cycles.map((cycle) => (
+                          {cycles.map((cycle) => (
                             <option key={cycle.idCycle} value={cycle.value}>
-                              {cycle.libelleCycle}
+                              {cycle.codeCycle}
                             </option>
                           ))}
                         </select>
